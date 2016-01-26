@@ -57,8 +57,6 @@ public class Inbox extends AppCompatActivity implements GoogleApiClient.Connecti
             Dialog d = GoogleApiAvailability.getInstance().getErrorDialog(this,r,JAVA_ER_DRITT);
             d.show();
         }
-
-
         if (mGoogleApiClient == null) {
             // ATTENTION: This "addApi(AppIndex.API)"was auto-generated to implement the App Indexing API.
             // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -75,9 +73,16 @@ public class Inbox extends AppCompatActivity implements GoogleApiClient.Connecti
     @Override
     public void onConnected(Bundle bundle) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            System.out.println("YOU HAS NO RIGHT");
+        }
+        else{
             Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,)
             if(mLastLocation != null){
                 System.out.println(mLastLocation.toString());
+            }
+            else {
+                System.out.println("BAJS");
             }
         }
     }
@@ -89,7 +94,7 @@ public class Inbox extends AppCompatActivity implements GoogleApiClient.Connecti
 
     @Override
     public void onLocationChanged(Location location) {
-
+        System.out.println(location.toString());
     }
 
     @Override
