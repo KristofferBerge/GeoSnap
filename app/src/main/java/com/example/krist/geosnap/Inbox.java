@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
+//import android.location.LocationListener;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -25,11 +25,14 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationAvailability;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationListener;
 
 import static android.content.Context.LOCATION_SERVICE;
 
-public class Inbox extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class Inbox extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
 
     String[] inboxItems = {"FørsteItem", "AndreItem"};
     private ListView lv;
@@ -77,45 +80,40 @@ public class Inbox extends AppCompatActivity implements GoogleApiClient.Connecti
         }
         else{
             Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,)
+            LocationRequest mLocationRequest = new LocationRequest();
+            mLocationRequest.setInterval(5000);
+            mLocationRequest.setSmallestDisplacement(1);
+
+                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+
             if(mLastLocation != null){
                 System.out.println(mLastLocation.toString());
             }
             else {
                 System.out.println("BAJS");
             }
+            LocationAvailability a = LocationServices.FusedLocationApi.getLocationAvailability(mGoogleApiClient);
+            System.out.println(a);
         }
     }
 
+
     @Override
     public void onConnectionSuspended(int i) {
-
+        System.out.println("CONNECTION SUSPENDED");
     }
 
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        System.out.println("CONNECTION FAILED");
+    }
     @Override
     public void onLocationChanged(Location location) {
         System.out.println(location.toString());
     }
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
 
-    }
 
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
-    }
 
     @Override
     public void onStart() {
@@ -156,4 +154,5 @@ public class Inbox extends AppCompatActivity implements GoogleApiClient.Connecti
         AppIndex.AppIndexApi.end(mGoogleApiClient, viewAction);
         mGoogleApiClient.disconnect();
     }
+
 }
