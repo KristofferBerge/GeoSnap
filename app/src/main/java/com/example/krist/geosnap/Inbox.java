@@ -38,7 +38,6 @@ public class Inbox extends AppCompatActivity {
 
     String[] inboxItems = {"FørsteItem", "AndreItem"};
     private ListView lv;
-    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,8 +108,6 @@ public class Inbox extends AppCompatActivity {
                 // TODO: Make sure this auto-generated app deep link URI is correct.
                 Uri.parse("android-app://com.example.krist.geosnap/http/host/path")
         );
-        AppIndex.AppIndexApi.end(mGoogleApiClient, viewAction);
-        mGoogleApiClient.disconnect();
     }
 
 }
