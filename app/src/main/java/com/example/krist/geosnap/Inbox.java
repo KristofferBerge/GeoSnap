@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -18,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.krist.geosnap.Services.GeoService;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -32,12 +34,11 @@ import com.google.android.gms.location.LocationListener;
 
 import static android.content.Context.LOCATION_SERVICE;
 
-public class Inbox extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+public class Inbox extends AppCompatActivity {
 
     String[] inboxItems = {"FørsteItem", "AndreItem"};
     private ListView lv;
     private GoogleApiClient mGoogleApiClient;
-    static final int JAVA_ER_DRITT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,84 +54,26 @@ public class Inbox extends AppCompatActivity implements GoogleApiClient.Connecti
             }
         });
 
-
+        //Checking if google play services is available
         int r = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
-        //0 er selvfølgelig SUCCESS, masse annet betyr andre ting
         if(r != 0){
-            System.out.println(r);
-            Dialog d = GoogleApiAvailability.getInstance().getErrorDialog(this,r,JAVA_ER_DRITT);
+            //If not available, user is prompted to install or update play services
+            Dialog d = GoogleApiAvailability.getInstance().getErrorDialog(this,r,1);
             d.show();
         }
-        if (mGoogleApiClient == null) {
-            // ATTENTION: This "addApi(AppIndex.API)"was auto-generated to implement the App Indexing API.
-            // See https://g.co/AppIndexing/AndroidStudio for more information.
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .addApi(AppIndex.API).build();
-        }
-        mGoogleApiClient.connect();
-        super.onStart();
+        //TODO: Do complete check if everything is good to go and start service'
+
+        com.example.krist.geosnap.Services.GeoService s = new GeoService();
+        //TODO: Am i doing this right?
+        Intent i = new Intent(this,GeoService.class);
+        System.out.println(i.toString());
+        System.out.println(s.toString());
+        startService(i);
+
+
+
+
     }
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            System.out.println("YOU HAS NO RIGHT");
-        }
-        else{
-            Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            LocationRequest mLocationRequest = new LocationRequest();
-            mLocationRequest.setInterval(5000);
-            mLocationRequest.setSmallestDisplacement(1);
-
-                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-
-            if(mLastLocation != null){
-                System.out.println(mLastLocation.toString());
-            }
-            requestLocationUpdate();
-            LocationAvailability a = LocationServices.FusedLocationApi.getLocationAvailability(mGoogleApiClient);
-            System.out.println(a);
-        }
-    }
-
-    private void requestLocationUpdate(){
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            System.out.println("YOU HAS NO RIGHT");
-        }
-        LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest = LocationRequest.create();
-        mLocationRequest.setInterval(2000);
-        mLocationRequest.setFastestInterval(1000);
-        mLocationRequest.setSmallestDisplacement(50);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        LocationServices.FusedLocationApi
-                .requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-    }
-
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        System.out.println("CONNECTION SUSPENDED");
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        System.out.println("CONNECTION FAILED");
-    }
-    @Override
-    public void onLocationChanged(Location location) {
-        System.out.println("CONNECTION CHANGED");
-        //LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-        //mGoogleApiClient.disconnect();
-        System.out.println(location.toString());
-        //requestLocationUpdate();
-    }
-
-
-
 
     @Override
     public void onStart() {
@@ -138,7 +81,6 @@ public class Inbox extends AppCompatActivity implements GoogleApiClient.Connecti
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        mGoogleApiClient.connect();
         Action viewAction = Action.newAction(
                 Action.TYPE_VIEW, // TODO: choose an action type.
                 "Inbox Page", // TODO: Define a title for the content shown.
@@ -149,7 +91,6 @@ public class Inbox extends AppCompatActivity implements GoogleApiClient.Connecti
                 // TODO: Make sure this auto-generated app deep link URI is correct.
                 Uri.parse("android-app://com.example.krist.geosnap/http/host/path")
         );
-        AppIndex.AppIndexApi.start(mGoogleApiClient, viewAction);
     }
 
     @Override
