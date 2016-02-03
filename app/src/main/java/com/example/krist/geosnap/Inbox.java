@@ -53,6 +53,7 @@ public class Inbox extends AppCompatActivity implements GoogleApiClient.Connecti
             }
         });
 
+
         int r = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
         //0 er selvfølgelig SUCCESS, masse annet betyr andre ting
         if(r != 0){
@@ -89,12 +90,24 @@ public class Inbox extends AppCompatActivity implements GoogleApiClient.Connecti
             if(mLastLocation != null){
                 System.out.println(mLastLocation.toString());
             }
-            else {
-                System.out.println("BAJS");
-            }
+            requestLocationUpdate();
             LocationAvailability a = LocationServices.FusedLocationApi.getLocationAvailability(mGoogleApiClient);
             System.out.println(a);
         }
+    }
+
+    private void requestLocationUpdate(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            System.out.println("YOU HAS NO RIGHT");
+        }
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest = LocationRequest.create();
+        mLocationRequest.setInterval(2000);
+        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setSmallestDisplacement(50);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        LocationServices.FusedLocationApi
+                .requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
     }
 
 
@@ -109,7 +122,11 @@ public class Inbox extends AppCompatActivity implements GoogleApiClient.Connecti
     }
     @Override
     public void onLocationChanged(Location location) {
+        System.out.println("CONNECTION CHANGED");
+        //LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        //mGoogleApiClient.disconnect();
         System.out.println(location.toString());
+        //requestLocationUpdate();
     }
 
 
