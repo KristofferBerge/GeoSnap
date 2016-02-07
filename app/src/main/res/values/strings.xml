@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">GeoSnap</string>
+    <string name="hours">hours</string>
+    <string name="minutes">minutes</string>
+    <string name="days">days</string>
+    <string name="ago">ago</string>
 </resources>

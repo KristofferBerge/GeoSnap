@@ -1,57 +1,71 @@
 package com.example.krist.geosnap;
 
-import android.Manifest;
-import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentSender;
-import android.content.pm.PackageManager;
-import android.location.Location;
-//import android.location.LocationListener;
+import android.content.IntentFilter;
 import android.net.Uri;
-import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.krist.geosnap.Adapters.ImgDataAdapter;
+import com.example.krist.geosnap.Models.ImgData;
 import com.example.krist.geosnap.Services.GeoService;
-import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationAvailability;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationListener;
 
-import static android.content.Context.LOCATION_SERVICE;
+import java.util.ArrayList;
+
 
 public class Inbox extends AppCompatActivity {
 
-    String[] inboxItems = {"FørsteItem", "AndreItem"};
+    private BroadcastReceiver mReciever;
     private ListView lv;
+    private ArrayList<ImgData> inboxSource = new ArrayList<ImgData>();
+    private ImgDataAdapter imgDataAdapter;
+
+    private void setInboxSource(ArrayList<ImgData> data){
+        inboxSource.clear();
+        for(ImgData d: data){
+            inboxSource.add(d);
+        }
+        imgDataAdapter.notifyDataSetChanged();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         setContentView(R.layout.activity_inbox);
         lv = (ListView) findViewById(R.id.listView);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, inboxItems);
-        lv.setAdapter(arrayAdapter);
+        imgDataAdapter = new ImgDataAdapter(this,inboxSource);
+        //ImgDataAdapter arrayAdapter = new ImgDataAdapter(this, inboxSource);
+        lv.setAdapter(imgDataAdapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 System.out.println("Hallo");
+                requestImgDataFromService();
             }
         });
+        Button b = (Button) findViewById(R.id.testKnapp);
+        b.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     requestImgDataFromService();
+                     System.out.println("Juhuuu");
+                 }
+             }
+        );
 
         //Checking if google play services is available
         int r = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
@@ -62,16 +76,12 @@ public class Inbox extends AppCompatActivity {
         }
         //TODO: Do complete check if everything is good to go and start service'
 
-        com.example.krist.geosnap.Services.GeoService s = new GeoService();
+        GeoService s = new GeoService("GeoService");
         //TODO: Am i doing this right?
         Intent i = new Intent(this,GeoService.class);
         System.out.println(i.toString());
         System.out.println(s.toString());
         startService(i);
-
-
-
-
     }
 
     @Override
@@ -90,6 +100,18 @@ public class Inbox extends AppCompatActivity {
                 // TODO: Make sure this auto-generated app deep link URI is correct.
                 Uri.parse("android-app://com.example.krist.geosnap/http/host/path")
         );
+
+        mReciever = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                System.out.println("ACTIVITY RECIEVED BROADCAST");
+                ArrayList<ImgData> imgList = (ArrayList<ImgData>) intent.getSerializableExtra("ArrayList<ImgData>");
+                setInboxSource(imgList);
+                System.out.println(imgList.size());
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReciever, new IntentFilter("ImgData"));
+
     }
 
     @Override
@@ -108,6 +130,11 @@ public class Inbox extends AppCompatActivity {
                 // TODO: Make sure this auto-generated app deep link URI is correct.
                 Uri.parse("android-app://com.example.krist.geosnap/http/host/path")
         );
+    }
+
+    private void requestImgDataFromService(){
+        Intent i = new Intent("ImgDataRequest");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(i);
     }
 
 }

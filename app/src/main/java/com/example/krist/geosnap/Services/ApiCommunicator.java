@@ -1,19 +1,12 @@
 package com.example.krist.geosnap.Services;
 
 import android.os.AsyncTask;
-import android.telecom.Call;
-
-import com.example.krist.geosnap.Models.IEventCallback;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.ExecutionException;
-
-import javax.security.auth.callback.Callback;
 
 /**
  * Created by krist on 03-Feb-16.
@@ -21,24 +14,18 @@ import javax.security.auth.callback.Callback;
 public class ApiCommunicator {
 
     public static String apiUrl = "http://geosnap.azurewebsites.net/api/Values";
-    private IEventCallback ServiceCallback;
 
-    public void RequestCallback(IEventCallback callback){
-        ServiceCallback = callback;
-    }
-
-    public void doWork(){
+    public String doWork(){
         try {
-            new AsyncApiCall().execute("/1").get();
+            return new AsyncApiCall().execute("").get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
+        return null;
     }
 
-    //TODO: No need to return string... Probably
     private class AsyncApiCall extends AsyncTask<String, Void, String>
     {
 
@@ -49,24 +36,28 @@ public class ApiCommunicator {
         @Override
         protected String doInBackground(String... params) {
             try{
+                //Constructing the url
                 String paramString = "";
                 for(String s: params){
                     paramString += s;
                 }
                 System.out.println(paramString);
                 URL url = new URL(apiUrl + paramString);
+                //Connecting to api
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 try{
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
                     StringBuilder stringBuilder = new StringBuilder();
                     String line;
+                    //Constructing string of result
                     while((line = bufferedReader.readLine()) != null){
                         stringBuilder.append(line).append("\n");
                     }
-                    ServiceCallback.EventTrigger(stringBuilder.toString());
+                    //Returning result as string
                     return stringBuilder.toString();
                 }
                 catch(Exception e){
+                    e.printStackTrace();
                     System.out.println("FAILED TO PROCESS DATA");
                 }
                 finally {
