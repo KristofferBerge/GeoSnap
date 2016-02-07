@@ -44,7 +44,6 @@ public class Inbox extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-
         setContentView(R.layout.activity_inbox);
         lv = (ListView) findViewById(R.id.listView);
         imgDataAdapter = new ImgDataAdapter(this,inboxSource);

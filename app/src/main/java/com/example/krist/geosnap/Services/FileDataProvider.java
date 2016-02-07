@@ -1,9 +1,14 @@
 package com.example.krist.geosnap.Services;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 
 import com.example.krist.geosnap.Models.ImgData;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -11,7 +16,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.jar.Manifest;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by krist on 06-Feb-16.
@@ -73,4 +83,23 @@ public class FileDataProvider {
         }
         return idArray;
     }
+
+    public Integer[] getLoadedImages(){
+        //Getting directory where downloadManager is saving images
+        File f = new File(String.valueOf(C.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)));
+        //Getting contents of file
+        File[] fileArr = f.listFiles();
+        Integer[] imgIdArr = new Integer[fileArr.length];
+        //Adding filename parsed to imgId to array
+        for(int i = 0; i < fileArr.length; i++){
+            System.out.println(fileArr[i].getName());
+            try {
+                imgIdArr[i] = ((Number) NumberFormat.getInstance().parse(fileArr[i].getName())).intValue();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return imgIdArr;
+    }
+
 }

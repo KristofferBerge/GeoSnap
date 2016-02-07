@@ -4,4 +4,8 @@
     <string name="minutes">minutes</string>
     <string name="days">days</string>
     <string name="ago">ago</string>
+
+    <string name="title_activity_img_viewer">ImgViewer</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

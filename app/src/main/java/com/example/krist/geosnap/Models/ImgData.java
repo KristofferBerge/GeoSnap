@@ -15,6 +15,7 @@ public class ImgData implements Serializable{
     private double Lng;
     private String User;
     private boolean Seen;
+    private boolean Loaded;
 
     public ImgData(int imgId, String imgUrl, Timestamp timestamp, double lat, double lng, String user){
         ImgId = imgId;
@@ -50,5 +51,7 @@ public class ImgData implements Serializable{
     }
 
     public Boolean getSeenStatus(){return Seen;}
-    public void setSeen(Boolean b){Seen = b;};
+    public void setSeen(Boolean b){Seen = b;}
+    public Boolean getLoadedStatus(){return Loaded;}
+    public void setLoadedStatus(Boolean b){Loaded = b;}
 }
