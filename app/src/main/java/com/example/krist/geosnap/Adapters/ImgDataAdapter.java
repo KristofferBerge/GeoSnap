@@ -1,6 +1,7 @@
 package com.example.krist.geosnap.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class ImgDataAdapter extends ArrayAdapter<ImgData> {
         long diff = now.getTime() - Resource.get(position).getmTimestamp().getTime();
         System.out.println(diff);
         String text = "";
+
         //TODO: Should probably be own function
         if(TimeUnit.MILLISECONDS.toMinutes(diff) < 59){
             text = TimeUnit.MILLISECONDS.toMinutes(diff)
@@ -61,9 +63,16 @@ public class ImgDataAdapter extends ArrayAdapter<ImgData> {
                             + " " + super.getContext().getString(R.string.days)
                             + " " + super.getContext().getString(R.string.ago);
             System.out.println("IS" + TimeUnit.MILLISECONDS.toDays(diff) + "DAYS");
-
         }
         ageView.setText(text);
+
+        if(Resource.get(position).getSeenStatus()){
+            icon.setImageResource(R.color.black_overlay);
+        }
+        else if(!Resource.get(position).getLoadedStatus()){
+            icon.setImageResource(R.color.colorPrimaryDark);
+        }
+
         return rowView;
     }
 }

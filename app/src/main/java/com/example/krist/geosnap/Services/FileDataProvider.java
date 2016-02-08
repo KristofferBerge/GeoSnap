@@ -1,10 +1,7 @@
 package com.example.krist.geosnap.Services;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 
 import com.example.krist.geosnap.Models.ImgData;
 
@@ -19,9 +16,6 @@ import java.io.StreamCorruptedException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.jar.Manifest;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by krist on 06-Feb-16.
@@ -56,7 +50,7 @@ public class FileDataProvider {
     }
 
     //Adding imgData objects to file
-    public void updateImageList(ArrayList<ImgData> list){
+    public void addToImageList(ArrayList<ImgData> list){
 
         ArrayList<ImgData> oldList = getImageList();
         for(ImgData d: list){
@@ -66,6 +60,19 @@ public class FileDataProvider {
             FileOutputStream fos = C.openFileOutput("ImgData.dat", C.MODE_PRIVATE);
             ObjectOutputStream os = new ObjectOutputStream(fos);
             os.writeObject(oldList);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void overWriteImageList(ArrayList<ImgData> list){
+        try {
+            FileOutputStream fos = C.openFileOutput("ImgData.dat", C.MODE_PRIVATE);
+            ObjectOutputStream os = new ObjectOutputStream(fos);
+            os.writeObject(list);
             fos.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -102,4 +109,64 @@ public class FileDataProvider {
         return imgIdArr;
     }
 
+    //Marking images as loaded and overwriting data-file
+    public void markLoadedImages(){
+        ArrayList<ImgData> imgList = getImageList();
+        Integer[] loadedList = getLoadedImages();
+        for(ImgData imgData:imgList){
+            for(int i=0; i<loadedList.length; i++){
+                if(imgData.getImgId() == loadedList[i]){
+                    imgData.setLoadedStatus(true);
+                }
+            }
+        }
+        overWriteImageList(imgList);
+    }
+
+    //Marking images as viewed and overwriting data-file
+    public void markImageViewed(int id){
+        ArrayList<ImgData> imgList = getImageList();
+        for(ImgData d:imgList){
+            if(d.getImgId() == id){
+                d.setSeen(true);
+            }
+        }
+        overWriteImageList(imgList);
+    }
+
+    //Removing image files already displayed or not matching any id in data-file
+    public void removeDisplayedImageFiles(){
+        File f = new File(String.valueOf(C.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)));
+        //Getting contents of file
+        File[] fileArr = f.listFiles();
+        //Getting all images
+        ArrayList<ImgData> imgList = getImageList();
+        outer: for(int i = 0; i < fileArr.length; i++){
+            int id = 0;
+            try {
+                //Setting id based on file name
+                Number n = ((Number) NumberFormat.getInstance().parse(fileArr[i].getName())).intValue();
+                id = Integer.parseInt(n.toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            //Check for matching id in data-file
+            for(ImgData d: imgList){
+                //If same id
+                if(d.getImgId() == id){
+                    //If seen
+                    if(d.getSeenStatus()){
+                        //Remove file
+                        fileArr[i].delete();
+                    }
+                    //Matching file was found
+                    //break out of inner loop and continue outer.
+                    continue outer;
+                }
+            }
+            //If matching id was not found in data-file
+            //Remove file
+            fileArr[i].delete();
+        }
+    }
 }

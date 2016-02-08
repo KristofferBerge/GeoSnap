@@ -4,12 +4,10 @@ import com.example.krist.geosnap.Models.ImgData;
 
 import org.json.JSONArray;
 
-import java.lang.reflect.Array;
 import java.util.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by krist on 06-Feb-16.
@@ -17,9 +15,7 @@ import java.util.List;
 public class ImgProcessor {
     //Recieves stringified json array from api and int array containing id of images already collected
     public static ArrayList<ImgData> GetImgObjects(String s,Integer[] collectedImgs){
-
         ArrayList<ImgData> imgList = new ArrayList<ImgData>();
-
         try{
             //Parsing stringified json to object
             JSONArray arr = new JSONArray(s);

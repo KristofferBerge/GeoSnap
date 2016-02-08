@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -52,8 +51,14 @@ public class Inbox extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("Hallo");
-                requestImgDataFromService();
+                //Only allow click event if image is loaded and not viewed.
+                ImgData data = (ImgData) parent.getAdapter().getItem(position);
+                if(!data.getSeenStatus() && data.getLoadedStatus()){
+                    //Opening new fullscreen activity to display image
+                    displayImgFullscreen(data.getImgId());
+                    //Notify service that image is displayed
+                    notifyImageDisplayed(data.getImgId());
+                }
             }
         });
         Button b = (Button) findViewById(R.id.testKnapp);
@@ -65,6 +70,7 @@ public class Inbox extends AppCompatActivity {
                  }
              }
         );
+
 
         //Checking if google play services is available
         int r = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
@@ -81,6 +87,20 @@ public class Inbox extends AppCompatActivity {
         System.out.println(i.toString());
         System.out.println(s.toString());
         startService(i);
+    }
+
+    private void displayImgFullscreen(int id){
+        ImgViewer viewer = new ImgViewer();
+        Intent i = new Intent(this,ImgViewer.class);
+        i.putExtra("IMG-URI",Integer.toString(id));
+        startActivity(i);
+    }
+
+    private void notifyImageDisplayed(int id){
+        Intent i = new Intent("ImgDisplayed");
+        i.putExtra("ID",Integer.toString(id));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(i);
+        System.out.println("IMGDISPLAYED BROADCAST SENT");
     }
 
     @Override

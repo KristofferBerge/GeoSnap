@@ -6,18 +6,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.IBinder;
-import android.service.wallpaper.WallpaperService;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.example.krist.geosnap.Models.ImgData;
 
-import java.io.File;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 //TODO STILL NOT STARTING ON NEW TRHEAD!!!!!!!!!!
@@ -28,6 +24,7 @@ public class GeoService extends IntentService {
     FileDataProvider fileDataProvider;
     BroadcastReceiver mReciever;
     BroadcastReceiver downloadCompleteReciever;
+    BroadcastReceiver imgDisplayedReciever;
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -67,42 +64,73 @@ public class GeoService extends IntentService {
             @Override
             public void onReceive(Context context, Intent intent) {
                 System.out.println("SERVICE RECIEVED BROADCAST");
-                returnImageData();
+                //Sending imageData from file and requesting loading of unloaded images
+                sendImageData();
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(mReciever,new IntentFilter("ImgDataRequest"));
+
+        //Broadcastreciever for completed download
         downloadCompleteReciever = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 System.out.println("DOWNLOAD COMPLETE");
+                //Updating loaded status on images in file
+                fileDataProvider.markLoadedImages();
+                //Sending list of images with updated loaded status, without requesting loading
+                sendUpdatedImgData();
             }
         };
         this.registerReceiver(downloadCompleteReciever, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
-        loadImage(10);
-        fileDataProvider.getLoadedImages();
 
+        //Broadcastreciever for image displayed
+        imgDisplayedReciever = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                System.out.println("RECIEVED");
+                String id = intent.getStringExtra("ID");
+                fileDataProvider.markImageViewed(Integer.parseInt(id));
+                //Sending list of images with updated loaded status, without requesting loading
+                sendUpdatedImgData();
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(imgDisplayedReciever, new IntentFilter("ImgDisplayed"));
         //TODO: WHY AM I DOING THIS?
         return START_STICKY;
     }
-
 
     public void RequestApiCall(Location location){
         //TODO: replace test method with rest-call using location data
         String result = apiCommunicator.doWork();
         ArrayList<ImgData> imgList = ImgProcessor.GetImgObjects(result,fileDataProvider.getCollectedImgs());
         System.out.println(imgList.size());
-        fileDataProvider.updateImageList(imgList);
+        fileDataProvider.addToImageList(imgList);
         System.out.println(fileDataProvider.getImageList().size());
         System.out.println(location);
     }
 
-    public ArrayList<ImgData> GetImageList(){
-        return null;
+    //Sending imagedata and requesting loading of unloaded images
+    private void sendImageData(){
+        Intent i = new Intent("ImgData");
+        //Loading image data from file
+        ArrayList<ImgData> imgDataList = fileDataProvider.getImageList();
+        for(ImgData d: imgDataList){
+            //if image is not loaded
+            if(!d.getLoadedStatus()){
+                loadImage(d.getImgId());
+            }
+        }
+        i.putExtra("ArrayList<ImgData>",imgDataList);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(i);
+        //Clean up cached images
+        fileDataProvider.removeDisplayedImageFiles();
     }
 
-    private void returnImageData(){
+    //Sending imagedata without requesting loading
+    private void sendUpdatedImgData(){
         Intent i = new Intent("ImgData");
-        i.putExtra("ArrayList<ImgData>",fileDataProvider.getImageList());
+        ArrayList<ImgData> imgDataList = fileDataProvider.getImageList();
+        i.putExtra("ArrayList<ImgData>",imgDataList);
         LocalBroadcastManager.getInstance(this).sendBroadcast(i);
     }
 
@@ -114,6 +142,7 @@ public class GeoService extends IntentService {
             DownloadManager downloader = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
             downloader.enqueue(new DownloadManager.Request(url)
                     .setTitle(String.valueOf(id))
+                            //TODO: REMOVE. ONLY FOR DEBUGGING
                     .setVisibleInDownloadsUi(true)
                     .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
                     .setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, id + ".jpg"));
@@ -122,5 +151,4 @@ public class GeoService extends IntentService {
             e.printStackTrace();
         }
     }
-
 }
