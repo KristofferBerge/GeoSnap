@@ -26,6 +26,12 @@ public class ApiCommunicator {
         return null;
     }
 
+
+    public void test(){
+
+    }
+
+
     private class AsyncApiCall extends AsyncTask<String, Void, String>
     {
 

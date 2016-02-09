@@ -103,15 +103,12 @@ public class GeoService extends IntentService {
         //TODO: replace test method with rest-call using location data
         String result = apiCommunicator.doWork();
         ArrayList<ImgData> imgList = ImgProcessor.GetImgObjects(result,fileDataProvider.getCollectedImgs());
-        System.out.println(imgList.size());
         fileDataProvider.addToImageList(imgList);
-        System.out.println(fileDataProvider.getImageList().size());
-        System.out.println(location);
+        sendImageData();
     }
 
     //Sending imagedata and requesting loading of unloaded images
     private void sendImageData(){
-        Intent i = new Intent("ImgData");
         //Loading image data from file
         ArrayList<ImgData> imgDataList = fileDataProvider.getImageList();
         for(ImgData d: imgDataList){
@@ -120,6 +117,7 @@ public class GeoService extends IntentService {
                 loadImage(d.getImgId());
             }
         }
+        Intent i = new Intent("ImgData");
         i.putExtra("ArrayList<ImgData>",imgDataList);
         LocalBroadcastManager.getInstance(this).sendBroadcast(i);
         //Clean up cached images
@@ -136,9 +134,9 @@ public class GeoService extends IntentService {
 
     private void loadImage(int id){
         try {
+            System.out.println("LOADING IMAGE" + id);
             String urlString = "http://www.kristofferberge.no/img/" + String.valueOf(id) + ".jpg";
             Uri url = Uri.parse(urlString);
-            System.out.println(urlString);
             DownloadManager downloader = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
             downloader.enqueue(new DownloadManager.Request(url)
                     .setTitle(String.valueOf(id))
