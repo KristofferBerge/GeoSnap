@@ -9,7 +9,6 @@ import java.sql.Timestamp;
  */
 public class ImgData implements Serializable{
     private int ImgId;
-    private String ImgUrl;
     private Timestamp mTimestamp;
     private double Lat;
     private double Lng;
@@ -17,9 +16,8 @@ public class ImgData implements Serializable{
     private boolean Seen;
     private boolean Loaded;
 
-    public ImgData(int imgId, String imgUrl, Timestamp timestamp, double lat, double lng, String user){
+    public ImgData(int imgId, Timestamp timestamp, double lat, double lng, String user){
         ImgId = imgId;
-        ImgUrl = imgUrl;
         mTimestamp = timestamp;
         Lat = lat;
         Lng = lng;
@@ -28,10 +26,6 @@ public class ImgData implements Serializable{
     
     public int getImgId() {
         return ImgId;
-    }
-
-    public String getImgUrl() {
-        return ImgUrl;
     }
 
     public Timestamp getmTimestamp() {

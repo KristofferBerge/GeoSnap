@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +22,8 @@ import com.example.krist.geosnap.Services.GeoService;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.common.GoogleApiAvailability;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -53,7 +57,7 @@ public class Inbox extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Only allow click event if image is loaded and not viewed.
                 ImgData data = (ImgData) parent.getAdapter().getItem(position);
-                if(!data.getSeenStatus() && data.getLoadedStatus()){
+                if (!data.getSeenStatus() && data.getLoadedStatus()) {
                     //Opening new fullscreen activity to display image
                     displayImgFullscreen(data.getImgId());
                     //Notify service that image is displayed
@@ -63,12 +67,19 @@ public class Inbox extends AppCompatActivity {
         });
         Button b = (Button) findViewById(R.id.testKnapp);
         b.setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View v) {
-                     requestImgDataFromService();
-                     System.out.println("Juhuuu");
-                 }
-             }
+                                 @Override
+                                 public void onClick(View v) {
+                                     requestImgDataFromService();
+                                 }
+                             }
+        );
+        Button b2 = (Button) findViewById(R.id.uploadTest);
+        b2.setOnClickListener(new View.OnClickListener() {
+                                 @Override
+                                 public void onClick(View v) {
+                                    startCamera();
+                                 }
+                             }
         );
 
 
@@ -92,7 +103,7 @@ public class Inbox extends AppCompatActivity {
     private void displayImgFullscreen(int id){
         ImgViewer viewer = new ImgViewer();
         Intent i = new Intent(this,ImgViewer.class);
-        i.putExtra("IMG-URI",Integer.toString(id));
+        i.putExtra("IMG-URI", Integer.toString(id));
         startActivity(i);
     }
 
@@ -101,6 +112,12 @@ public class Inbox extends AppCompatActivity {
         i.putExtra("ID",Integer.toString(id));
         LocalBroadcastManager.getInstance(this).sendBroadcast(i);
         System.out.println("IMGDISPLAYED BROADCAST SENT");
+    }
+
+    private void displayImgUploader(){
+        ImgUploader uploader = new ImgUploader();
+        Intent i = new Intent(this,ImgUploader.class);
+        startActivity(i);
     }
 
     @Override
@@ -154,6 +171,31 @@ public class Inbox extends AppCompatActivity {
     private void requestImgDataFromService(){
         Intent i = new Intent("ImgDataRequest");
         LocalBroadcastManager.getInstance(this).sendBroadcast(i);
+    }
+
+
+    private void startCamera(){
+        //PREPARE OUTPUT FILE
+        String dir = String.valueOf(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES));
+        String filepath = dir + "/cachedImage.jpg";
+        File outputFile = new File(filepath);
+        try {
+            outputFile.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Uri outputFileUri = Uri.fromFile(outputFile);
+        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        i.putExtra(MediaStore.EXTRA_OUTPUT,outputFileUri);
+        startActivityForResult(i, 0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 0 && resultCode == RESULT_OK){
+            displayImgUploader();
+        }
     }
 
 }

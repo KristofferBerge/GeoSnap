@@ -42,7 +42,6 @@ public class ImgDataAdapter extends ArrayAdapter<ImgData> {
         Date date = new Date();
         Timestamp now = new Timestamp(date.getTime());
         long diff = now.getTime() - Resource.get(position).getmTimestamp().getTime();
-        System.out.println(diff);
         String text = "";
 
         //TODO: Should probably be own function
@@ -50,13 +49,11 @@ public class ImgDataAdapter extends ArrayAdapter<ImgData> {
             text = TimeUnit.MILLISECONDS.toMinutes(diff)
                     + " " + super.getContext().getString(R.string.minutes)
                     + " " + super.getContext().getString(R.string.ago);
-            System.out.println("IS MINUTES");
         }
         else if(TimeUnit.MILLISECONDS.toHours(diff) < 23){
             text = TimeUnit.MILLISECONDS.toHours(diff)
                             + " " + super.getContext().getString(R.string.hours)
                             + " " + super.getContext().getString(R.string.ago);
-            System.out.println("IS HOURS");
         }
         else{
             text = TimeUnit.MILLISECONDS.toDays(diff)

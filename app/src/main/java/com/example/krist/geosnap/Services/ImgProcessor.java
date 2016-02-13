@@ -38,7 +38,6 @@ public class ImgProcessor {
                 //Creating Imgdata objects and adding them to arraylist.
                 ImgData d = new ImgData(
                         Integer.parseInt(arr.getJSONObject(i).getString("ImgId")),
-                        arr.getJSONObject(i).getString("ImgUrl"),
                         timestamp,
                         Double.parseDouble(arr.getJSONObject(i).getString("Lat")),
                         Double.parseDouble(arr.getJSONObject(i).getString("Lng")),

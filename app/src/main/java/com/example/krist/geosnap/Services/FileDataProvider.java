@@ -1,6 +1,8 @@
 package com.example.krist.geosnap.Services;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 
 import com.example.krist.geosnap.Models.ImgData;
@@ -68,7 +70,7 @@ public class FileDataProvider {
         }
     }
 
-    private void overWriteImageList(ArrayList<ImgData> list){
+    public void overWriteImageList(ArrayList<ImgData> list){
         try {
             FileOutputStream fos = C.openFileOutput("ImgData.dat", C.MODE_PRIVATE);
             ObjectOutputStream os = new ObjectOutputStream(fos);
@@ -132,6 +134,12 @@ public class FileDataProvider {
             }
         }
         overWriteImageList(imgList);
+    }
+
+    public Bitmap getCachedImage(){
+        File f = new File(String.valueOf(C.getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/cachedImage.jpg")));
+        //Parsing image-file to bitmap
+        return BitmapFactory.decodeFile(f.getPath());
     }
 
     //Removing image files already displayed or not matching any id in data-file
