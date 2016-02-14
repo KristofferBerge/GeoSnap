@@ -9,7 +9,14 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="655cea1b-e77d-41e4-a8a5-40ac11a5a3b4" name="Default" comment="" />
+    <list default="true" id="655cea1b-e77d-41e4-a8a5-40ac11a5a3b4" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Models/ImgDataComparator.java" />
+      <change type="MOVED" beforePath="C:\Users\krist\AndroidStudioProjects\geosnap\app\src\main\java\com\example\krist\geosnap\Services\FileDataProvider.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Controllers/FileDataProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/GeoService.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/GeoService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Models/ImgData.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Models/ImgData.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Inbox.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Inbox.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="geosnap.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/app/build/intermediates/assets/" />
@@ -80,27 +87,56 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ImgData.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Models/ImgData.java">
+      <file leaf-file-name="GeoService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/GeoService.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="29" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
+              <caret line="161" column="0" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#614#615#0" expanded="true" />
-                <element signature="e#642#643#0" expanded="true" />
-                <element signature="e#682#683#0" expanded="true" />
-                <element signature="e#715#716#0" expanded="true" />
+                <element signature="e#1263#1264#0" expanded="true" />
+                <element signature="e#1290#1291#0" expanded="true" />
+                <element signature="e#1315#1316#0" expanded="true" />
+                <element signature="e#1349#1350#0" expanded="true" />
+                <element signature="e#2044#2380#0" expanded="true" />
+                <element signature="e#2379#2380#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="FileDataProvider.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/FileDataProvider.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Controllers/FileDataProvider.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.551724">
-              <caret line="72" column="10" selection-start-line="72" selection-start-column="10" selection-end-line="72" selection-end-column="10" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="92" column="39" selection-start-line="92" selection-start-column="39" selection-end-line="92" selection-end-column="39" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1033#1042#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Inbox.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Inbox.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.46126762">
+              <caret line="146" column="67" selection-start-line="146" selection-start-column="67" selection-end-line="146" selection-end-column="67" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#5563#6085#0" expanded="true" />
+                <element signature="e#6084#6085#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ImgData.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Models/ImgData.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="4" column="26" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -108,27 +144,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GeoService.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/GeoService.java">
+      <file leaf-file-name="ImgDataAdapter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Adapters/ImgDataAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.28169015">
-              <caret line="154" column="53" selection-start-line="154" selection-start-column="53" selection-end-line="154" selection-end-column="53" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="42" column="47" selection-start-line="42" selection-start-column="47" selection-end-line="42" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1185#1186#0" expanded="true" />
-                <element signature="e#1212#1213#0" expanded="true" />
-                <element signature="e#1237#1238#0" expanded="true" />
-                <element signature="e#1271#1272#0" expanded="true" />
-                <element signature="e#1951#2277#0" expanded="true" />
-                <element signature="e#2276#2277#0" expanded="true" />
-                <element signature="e#2478#2920#0" expanded="true" />
-                <element signature="e#2919#2920#0" expanded="true" />
-                <element signature="e#3119#3569#0" expanded="true" />
-                <element signature="e#3568#3569#0" expanded="true" />
-                <element signature="e#3771#4010#0" expanded="true" />
-                <element signature="e#4009#4010#0" expanded="true" />
-                <element signature="e#4639#4640#0" expanded="true" />
-                <element signature="e#4681#4682#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -139,78 +161,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
-              <folding>
-                <element signature="e#985#986#0" expanded="true" />
-                <element signature="e#1006#1007#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Inbox.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Inbox.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="171" column="45" selection-start-line="171" selection-start-column="31" selection-end-line="171" selection-end-column="45" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2544#2810#0" expanded="true" />
-                <element signature="e#2809#2810#0" expanded="true" />
-                <element signature="e#2912#3163#0" expanded="true" />
-                <element signature="e#3162#3163#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ImgProcessor.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/ImgProcessor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="43" column="61" selection-start-line="43" selection-start-column="61" selection-end-line="43" selection-end-column="61" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#546#555#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LocationServiceCallback.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/LocationServiceCallback.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="50" column="43" selection-start-line="50" selection-start-column="43" selection-end-line="50" selection-end-column="43" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ImgUploader.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/ImgUploader.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="55" column="29" selection-start-line="55" selection-start-column="29" selection-end-line="55" selection-end-column="29" />
-              <folding>
-                <element signature="e#1329#1583#0" expanded="true" />
-                <element signature="e#1582#1583#0" expanded="true" />
-                <element signature="e#1627#2049#0" expanded="true" />
-                <element signature="e#2048#2049#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_img_uploader.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_img_uploader.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.4827585">
-              <caret line="23" column="30" selection-start-line="23" selection-start-column="30" selection-end-line="23" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -2058,15 +2008,17 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Adapters/ImgDataAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_inbox.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Inbox.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_img_uploader.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/LocationServiceCallback.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/ImgUploader.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/ApiCommunicator.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Models/ImgData.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/ImgProcessor.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/FileDataProvider.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Controllers/FileDataProvider.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/GeoService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Models/ImgData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Inbox.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Models/ImgDataComparator.java" />
       </list>
     </option>
   </component>
@@ -2103,8 +2055,8 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane" />
-      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2125,28 +2077,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="geosnap" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -2243,6 +2173,28 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="Controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geosnap" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geosnap" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="Adapters" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -2263,7 +2215,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2485,7 +2437,6 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1663113" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -2497,6 +2448,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -2517,36 +2469,14 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/GeoService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1185#1186#0" expanded="true" />
-            <element signature="e#1212#1213#0" expanded="true" />
-            <element signature="e#1237#1238#0" expanded="true" />
-            <element signature="e#1271#1272#0" expanded="true" />
-            <element signature="e#1951#2277#0" expanded="true" />
-            <element signature="e#2276#2277#0" expanded="true" />
-            <element signature="e#2478#2920#0" expanded="true" />
-            <element signature="e#2919#2920#0" expanded="true" />
-            <element signature="e#3119#3569#0" expanded="true" />
-            <element signature="e#3568#3569#0" expanded="true" />
-            <element signature="e#3771#4010#0" expanded="true" />
-            <element signature="e#4009#4010#0" expanded="true" />
-            <element signature="e#4639#4640#0" expanded="true" />
-            <element signature="e#4681#4682#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Inbox.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="58" column="60" selection-start-line="58" selection-start-column="60" selection-end-line="58" selection-end-column="60" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#5563#6085#0" expanded="true" />
+            <element signature="e#6084#6085#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2555,9 +2485,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="42" column="48" selection-start-line="42" selection-start-column="48" selection-end-line="42" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2567,18 +2494,17 @@
           <caret line="38" column="5" selection-start-line="38" selection-start-column="5" selection-end-line="38" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#682#683#0" expanded="true" />
-            <element signature="e#715#716#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/FileDataProvider.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Controllers/FileDataProvider.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="148" column="52" selection-start-line="148" selection-start-column="52" selection-end-line="148" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1033#1042#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2598,7 +2524,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="25" column="16" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="16" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2608,8 +2534,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="17" column="62" selection-start-line="17" selection-start-column="62" selection-end-line="17" selection-end-column="62" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#546#555#0" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2620,20 +2545,12 @@
           <caret line="136" column="26" selection-start-line="136" selection-start-column="17" selection-end-line="136" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1185#1186#0" expanded="true" />
-            <element signature="e#1212#1213#0" expanded="true" />
-            <element signature="e#1237#1238#0" expanded="true" />
-            <element signature="e#1271#1272#0" expanded="true" />
-            <element signature="e#1951#2277#0" expanded="true" />
-            <element signature="e#2276#2277#0" expanded="true" />
-            <element signature="e#2478#2920#0" expanded="true" />
-            <element signature="e#2919#2920#0" expanded="true" />
-            <element signature="e#3119#3569#0" expanded="true" />
-            <element signature="e#3568#3569#0" expanded="true" />
-            <element signature="e#3771#4010#0" expanded="true" />
-            <element signature="e#4009#4010#0" expanded="true" />
-            <element signature="e#4639#4640#0" expanded="true" />
-            <element signature="e#4681#4682#0" expanded="true" />
+            <element signature="e#1263#1264#0" expanded="true" />
+            <element signature="e#1290#1291#0" expanded="true" />
+            <element signature="e#1315#1316#0" expanded="true" />
+            <element signature="e#1349#1350#0" expanded="true" />
+            <element signature="e#2044#2380#0" expanded="true" />
+            <element signature="e#2379#2380#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2644,6 +2561,8 @@
           <caret line="58" column="60" selection-start-line="58" selection-start-column="60" selection-end-line="58" selection-end-column="60" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#5563#6085#0" expanded="true" />
+            <element signature="e#6084#6085#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2652,9 +2571,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="42" column="48" selection-start-line="42" selection-start-column="48" selection-end-line="42" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2664,6 +2580,8 @@
           <caret line="66" column="10" selection-start-line="66" selection-start-column="10" selection-end-line="66" selection-end-column="10" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#5563#6085#0" expanded="true" />
+            <element signature="e#6084#6085#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2674,18 +2592,17 @@
           <caret line="55" column="54" selection-start-line="55" selection-start-column="54" selection-end-line="55" selection-end-column="54" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#682#683#0" expanded="true" />
-            <element signature="e#715#716#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/FileDataProvider.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Controllers/FileDataProvider.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="97" column="40" selection-start-line="97" selection-start-column="40" selection-end-line="97" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1033#1042#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2695,7 +2612,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="25" column="16" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="16" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2706,20 +2623,12 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1185#1186#0" expanded="true" />
-            <element signature="e#1212#1213#0" expanded="true" />
-            <element signature="e#1237#1238#0" expanded="true" />
-            <element signature="e#1271#1272#0" expanded="true" />
-            <element signature="e#1951#2277#0" expanded="true" />
-            <element signature="e#2276#2277#0" expanded="true" />
-            <element signature="e#2478#2920#0" expanded="true" />
-            <element signature="e#2919#2920#0" expanded="true" />
-            <element signature="e#3119#3569#0" expanded="true" />
-            <element signature="e#3568#3569#0" expanded="true" />
-            <element signature="e#3771#4010#0" expanded="true" />
-            <element signature="e#4009#4010#0" expanded="true" />
-            <element signature="e#4639#4640#0" expanded="true" />
-            <element signature="e#4681#4682#0" expanded="true" />
+            <element signature="e#1263#1264#0" expanded="true" />
+            <element signature="e#1290#1291#0" expanded="true" />
+            <element signature="e#1315#1316#0" expanded="true" />
+            <element signature="e#1349#1350#0" expanded="true" />
+            <element signature="e#2044#2380#0" expanded="true" />
+            <element signature="e#2379#2380#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2738,6 +2647,8 @@
           <caret line="43" column="43" selection-start-line="43" selection-start-column="43" selection-end-line="43" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#5563#6085#0" expanded="true" />
+            <element signature="e#6084#6085#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2775,8 +2686,6 @@
           <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#682#683#0" expanded="true" />
-            <element signature="e#715#716#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2787,6 +2696,8 @@
           <caret line="109" column="10" selection-start-line="109" selection-start-column="10" selection-end-line="109" selection-end-column="10" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#5563#6085#0" expanded="true" />
+            <element signature="e#6084#6085#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2797,20 +2708,12 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1185#1186#0" expanded="true" />
-            <element signature="e#1212#1213#0" expanded="true" />
-            <element signature="e#1237#1238#0" expanded="true" />
-            <element signature="e#1271#1272#0" expanded="true" />
-            <element signature="e#1951#2277#0" expanded="true" />
-            <element signature="e#2276#2277#0" expanded="true" />
-            <element signature="e#2478#2920#0" expanded="true" />
-            <element signature="e#2919#2920#0" expanded="true" />
-            <element signature="e#3119#3569#0" expanded="true" />
-            <element signature="e#3568#3569#0" expanded="true" />
-            <element signature="e#3771#4010#0" expanded="true" />
-            <element signature="e#4009#4010#0" expanded="true" />
-            <element signature="e#4639#4640#0" expanded="true" />
-            <element signature="e#4681#4682#0" expanded="true" />
+            <element signature="e#1263#1264#0" expanded="true" />
+            <element signature="e#1290#1291#0" expanded="true" />
+            <element signature="e#1315#1316#0" expanded="true" />
+            <element signature="e#1349#1350#0" expanded="true" />
+            <element signature="e#2044#2380#0" expanded="true" />
+            <element signature="e#2379#2380#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2828,8 +2731,6 @@
           <caret line="24" column="4" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#682#683#0" expanded="true" />
-            <element signature="e#715#716#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2839,7 +2740,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="67" column="47" selection-start-line="67" selection-start-column="47" selection-end-line="67" selection-end-column="47" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2858,6 +2759,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#5563#6085#0" expanded="true" />
+            <element signature="e#6084#6085#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2939,19 +2842,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.0299295">
           <caret line="47" column="39" selection-start-line="47" selection-start-column="39" selection-end-line="47" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Adapters/ImgDataAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46126762">
-          <caret line="43" column="85" selection-start-line="43" selection-start-column="85" selection-end-line="43" selection-end-column="85" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2987,60 +2877,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/ImgUploader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.9876761">
           <caret line="55" column="29" selection-start-line="55" selection-start-column="29" selection-end-line="55" selection-end-column="29" />
-          <folding>
-            <element signature="e#1329#1583#0" expanded="true" />
-            <element signature="e#1582#1583#0" expanded="true" />
-            <element signature="e#1627#2049#0" expanded="true" />
-            <element signature="e#2048#2049#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/FileDataProvider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.551724">
-          <caret line="72" column="10" selection-start-line="72" selection-start-column="10" selection-end-line="72" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/ApiCommunicator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
-          <folding>
-            <element signature="e#985#986#0" expanded="true" />
-            <element signature="e#1006#1007#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Models/ImgData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="29" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#614#615#0" expanded="true" />
-            <element signature="e#642#643#0" expanded="true" />
-            <element signature="e#682#683#0" expanded="true" />
-            <element signature="e#715#716#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/ImgProcessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="61" selection-start-line="43" selection-start-column="61" selection-end-line="43" selection-end-column="61" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#546#555#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3049,45 +2888,92 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="50" column="43" selection-start-line="50" selection-start-column="43" selection-end-line="50" selection-end-column="43" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Inbox.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/ApiCommunicator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="171" column="45" selection-start-line="171" selection-start-column="31" selection-end-line="171" selection-end-column="45" />
+          <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/ImgProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.5563381">
+          <caret line="52" column="23" selection-start-line="52" selection-start-column="23" selection-end-line="52" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Controllers/FileDataProvider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="92" column="39" selection-start-line="92" selection-start-column="39" selection-end-line="92" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2544#2810#0" expanded="true" />
-            <element signature="e#2809#2810#0" expanded="true" />
-            <element signature="e#2912#3163#0" expanded="true" />
-            <element signature="e#3162#3163#0" expanded="true" />
+            <element signature="e#1033#1042#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Services/GeoService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28169015">
-          <caret line="154" column="53" selection-start-line="154" selection-start-column="53" selection-end-line="154" selection-end-column="53" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="161" column="0" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1185#1186#0" expanded="true" />
-            <element signature="e#1212#1213#0" expanded="true" />
-            <element signature="e#1237#1238#0" expanded="true" />
-            <element signature="e#1271#1272#0" expanded="true" />
-            <element signature="e#1951#2277#0" expanded="true" />
-            <element signature="e#2276#2277#0" expanded="true" />
-            <element signature="e#2478#2920#0" expanded="true" />
-            <element signature="e#2919#2920#0" expanded="true" />
-            <element signature="e#3119#3569#0" expanded="true" />
-            <element signature="e#3568#3569#0" expanded="true" />
-            <element signature="e#3771#4010#0" expanded="true" />
-            <element signature="e#4009#4010#0" expanded="true" />
-            <element signature="e#4639#4640#0" expanded="true" />
-            <element signature="e#4681#4682#0" expanded="true" />
+            <element signature="e#1263#1264#0" expanded="true" />
+            <element signature="e#1290#1291#0" expanded="true" />
+            <element signature="e#1315#1316#0" expanded="true" />
+            <element signature="e#1349#1350#0" expanded="true" />
+            <element signature="e#2044#2380#0" expanded="true" />
+            <element signature="e#2379#2380#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Models/ImgData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="26" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Adapters/ImgDataAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="42" column="47" selection-start-line="42" selection-start-column="47" selection-end-line="42" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Models/ImgDataComparator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35915494">
+          <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/krist/geosnap/Inbox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.46126762">
+          <caret line="146" column="67" selection-start-line="146" selection-start-column="67" selection-end-line="146" selection-end-column="67" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5563#6085#0" expanded="true" />
+            <element signature="e#6084#6085#0" expanded="true" />
           </folding>
         </state>
       </provider>

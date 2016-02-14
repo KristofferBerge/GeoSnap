@@ -18,6 +18,7 @@ import android.widget.ListView;
 
 import com.example.krist.geosnap.Adapters.ImgDataAdapter;
 import com.example.krist.geosnap.Models.ImgData;
+import com.example.krist.geosnap.Models.ImgDataComparator;
 import com.example.krist.geosnap.Services.GeoService;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -25,11 +26,12 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Inbox extends AppCompatActivity {
 
-    private BroadcastReceiver mReciever;
+    private BroadcastReceiver imgDataUpdateReciever;
     private ListView lv;
     private ArrayList<ImgData> inboxSource = new ArrayList<ImgData>();
     private ImgDataAdapter imgDataAdapter;
@@ -137,16 +139,17 @@ public class Inbox extends AppCompatActivity {
                 Uri.parse("android-app://com.example.krist.geosnap/http/host/path")
         );
 
-        mReciever = new BroadcastReceiver() {
+        imgDataUpdateReciever = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                System.out.println("ACTIVITY RECIEVED BROADCAST");
+                System.out.println("ACTIVITY RECIEVED UPDATED IMAGES");
                 ArrayList<ImgData> imgList = (ArrayList<ImgData>) intent.getSerializableExtra("ArrayList<ImgData>");
+                Collections.sort(imgList, new ImgDataComparator());
                 setInboxSource(imgList);
-                System.out.println(imgList.size());
+                System.out.println("UPDATED IMAGE LIST IS SIZE: " + imgList.size());
             }
         };
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReciever, new IntentFilter("ImgData"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(imgDataUpdateReciever, new IntentFilter("ImgDataUpdate"));
 
     }
 
