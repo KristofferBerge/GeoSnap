@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.example.krist.geosnap.Controllers.FileDataProvider;
 import com.example.krist.geosnap.Models.ImgData;
+import com.example.krist.geosnap.Activities.UserSettings;
 
 import java.util.ArrayList;
 
@@ -177,8 +179,13 @@ public class GeoService extends IntentService {
     private void uploadImage(){
         //Get gps-position
         Location loc = locationServiceCallback.GetPosition();
+        //Accessing shared preferences
+        SharedPreferences settings = getSharedPreferences(UserSettings.USER_SETTINGS_RESOURCE, 0);
+        String username = settings.getString(UserSettings.USERNAME_SETTING, "unknown");
+        //TODO: USE CONF ID WHEN IMPLEMENTED BY API
+        int confId = settings.getInt(UserSettings.CONFID_SETTING, 0);
         if(loc != null){
-            apiCommunicator.UploadImage(fileDataProvider.getCachedImage(), loc.getLatitude(), loc.getLongitude(), "Root");
+            apiCommunicator.UploadImage(fileDataProvider.getCachedImage(), loc.getLatitude(), loc.getLongitude(), username);
         }
         else{
             //TODO: Add message to user to explain why settings opens

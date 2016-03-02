@@ -1,4 +1,4 @@
-package com.example.krist.geosnap;
+package com.example.krist.geosnap.Activities;
 
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -19,6 +19,7 @@ import android.widget.ListView;
 import com.example.krist.geosnap.Adapters.ImgDataAdapter;
 import com.example.krist.geosnap.Models.ImgData;
 import com.example.krist.geosnap.Models.ImgDataComparator;
+import com.example.krist.geosnap.R;
 import com.example.krist.geosnap.Services.GeoService;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -83,6 +84,13 @@ public class Inbox extends AppCompatActivity {
                                  }
                              }
         );
+        Button settingsButton = (Button) findViewById(R.id.openSettingsButton);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displaySettings();
+            }
+        });
 
 
         //Checking if google play services is available
@@ -119,6 +127,10 @@ public class Inbox extends AppCompatActivity {
     private void displayImgUploader(){
         ImgUploader uploader = new ImgUploader();
         Intent i = new Intent(this,ImgUploader.class);
+        startActivity(i);
+    }
+    private void displaySettings(){
+        Intent i = new Intent(this,UserSettings.class);
         startActivity(i);
     }
 

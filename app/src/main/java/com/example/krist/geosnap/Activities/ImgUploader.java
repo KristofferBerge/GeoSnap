@@ -1,4 +1,4 @@
-package com.example.krist.geosnap;
+package com.example.krist.geosnap.Activities;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.example.krist.geosnap.R;
 
 import java.io.File;
 import java.io.IOException;

@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Inbox">
+        <activity android:name=".Activities.Inbox">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,11 +36,12 @@
             android:exported="true" />
 
         <activity
-            android:name=".ImgViewer"
+            android:name=".Activities.ImgViewer"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_img_viewer"
             android:theme="@style/FullscreenTheme" />
-        <activity android:name=".ImgUploader"></activity>
+        <activity android:name=".Activities.ImgUploader" />
+        <activity android:name=".Activities.UserSettings"></activity>
     </application>
 
 </manifest>

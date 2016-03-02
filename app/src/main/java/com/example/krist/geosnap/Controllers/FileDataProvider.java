@@ -40,11 +40,12 @@ public class FileDataProvider {
     }
 
     private void overWriteImageDataFile(ArrayList<ImgData> list){
-        System.out.println("Overwriting image file");
+        System.out.println("Overwriting image file with size: " + list.size());
         try {
             FileOutputStream fos = geoService.openFileOutput("ImgData.dat", geoService.MODE_PRIVATE);
             ObjectOutputStream os = new ObjectOutputStream(fos);
             os.writeObject(list);
+            os.close();
             fos.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,12 +69,15 @@ public class FileDataProvider {
             }
         }
         //Update file and return
+        System.out.println("LIST OF NEW IMAGES SIZE: " + outputList.size());
         overWriteImageDataFile(outputList);
         return outputList;
     }
 
+
     private void initiateLoading(ArrayList<ImgData> inputList){
         Integer[] loadedImages = getLoadedImages();
+
         System.out.println("IMAGES LOADED:");
         for(int i = 0; i < loadedImages.length; i++){
             System.out.print(loadedImages[i] + ", ");
@@ -121,6 +125,8 @@ public class FileDataProvider {
             ObjectInputStream is = new ObjectInputStream(fis);
             ArrayList<ImgData> imgList = (ArrayList<ImgData>) is.readObject();
             System.out.println("IMGDATA LIST SIZE: " + imgList.size());
+            is.close();
+            fis.close();
             //Removing old files from list and updating file
             imgList = removeOldFileData(imgList);
             initiateLoading(imgList);
@@ -131,6 +137,7 @@ public class FileDataProvider {
         }
         //Something went wrong reading the file
         //Restore file and return empty list
+        System.out.println("CLUSTERFUCK IN FILE. RESETTING THE ENTIRE THING");
         return resetImageDataFile();
     }
 
@@ -140,7 +147,8 @@ public class FileDataProvider {
         for(ImgData d: list){
             oldList.add(d);
         }
-        overWriteImageDataFile(list);
+        System.out.println("FINISHED ADDING IMAGES. OVERVRITING WITH SIZE: " + oldList.size());
+        overWriteImageDataFile(oldList);
     }
 
     //Marking images as viewed and overwriting data-file
@@ -149,6 +157,7 @@ public class FileDataProvider {
         for(ImgData d:imgList){
             if(d.getImgId() == id){
                 d.setSeen(true);
+                System.out.println("Marking: " + d.getImgId() + " as seen");
             }
         }
         overWriteImageDataFile(imgList);

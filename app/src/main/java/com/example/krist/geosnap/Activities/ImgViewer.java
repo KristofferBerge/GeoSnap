@@ -1,4 +1,4 @@
-package com.example.krist.geosnap;
+package com.example.krist.geosnap.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -14,6 +14,8 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.example.krist.geosnap.R;
 
 import java.io.File;
 
