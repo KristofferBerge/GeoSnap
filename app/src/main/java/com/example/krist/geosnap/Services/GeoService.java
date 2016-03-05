@@ -28,6 +28,7 @@ public class GeoService extends IntentService {
     ApiCommunicator apiCommunicator;
     FileDataProvider fileDataProvider;
     BroadcastReceiver imageDataRequestReciever;
+    BroadcastReceiver forceUpdateRequestReciever;
     BroadcastReceiver downloadCompleteReciever;
     BroadcastReceiver imgDisplayedReciever;
     BroadcastReceiver uploadImageReciever;
@@ -74,6 +75,22 @@ public class GeoService extends IntentService {
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(imageDataRequestReciever,new IntentFilter("ImgDataRequest"));
+
+        //Broadcastreciever for update request from activity
+        forceUpdateRequestReciever = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                System.out.println("Recieved");
+                Location lastknownLocation = locationServiceCallback.GetPosition();
+                if(lastknownLocation != null){
+                    System.out.println("Location found, updating");
+                    RequestApiCall(lastknownLocation);
+                }
+                System.out.println("No location found");
+                //TODO: Error if no position is found
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(forceUpdateRequestReciever, new IntentFilter("ForceUpdateImage"));
 
         //Broadcastreciever for completed download
         downloadCompleteReciever = new BroadcastReceiver() {
@@ -125,13 +142,6 @@ public class GeoService extends IntentService {
         LocalBroadcastManager.getInstance(this).sendBroadcast(i);
     }
 
-
-    public void OnLocationUpdateRecieved(){
-        //Make api call
-        //Try get cached image data id
-        //Update image data file
-        //Notify user if new images found
-    }
 
     public void loadImage(int id){
         //Check if image already is downloading

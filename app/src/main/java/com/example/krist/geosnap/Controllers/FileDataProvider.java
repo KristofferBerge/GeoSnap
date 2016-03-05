@@ -30,7 +30,6 @@ public class FileDataProvider {
         geoService = c;
     }
 
-
     //Overwrites file with and returns empty list
     private ArrayList<ImgData> resetImageDataFile(){
         System.out.println("RESETTING IMAGE DATA FILE");
@@ -161,6 +160,7 @@ public class FileDataProvider {
             }
         }
         overWriteImageDataFile(imgList);
+        removeDisplayedImageFiles();
     }
 
 
@@ -208,6 +208,7 @@ public class FileDataProvider {
             }
         }
         overWriteImageDataFile(imgList);
+        removeDisplayedImageFiles();
     }
 
 

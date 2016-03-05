@@ -11,8 +11,16 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="430dp"
         android:id="@+id/uploaderImageView"
+        android:rotation="90"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/uploadProgressSpinner"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -20,6 +28,18 @@
         android:id="@+id/uploaderShareButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/uploaderImageView"
-        android:text="Share"/>
+        android:text="Share"
+        android:layout_below="@+id/uploaderImageView"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text=""
+        android:id="@+id/uploadErrorText"
+        android:textColor="@color/colorAccent"
+        android:layout_above="@+id/uploaderShareButton"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

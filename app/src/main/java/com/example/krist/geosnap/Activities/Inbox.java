@@ -63,8 +63,11 @@ public class Inbox extends AppCompatActivity {
                 if (!data.getSeenStatus() && data.getLoadedStatus()) {
                     //Opening new fullscreen activity to display image
                     displayImgFullscreen(data.getImgId());
+
+
+                    //TODO: Remove this. Method moved to imgViewer activity
                     //Notify service that image is displayed
-                    notifyImageDisplayed(data.getImgId());
+                    //notifyImageDisplayed(data.getImgId());
                 }
             }
         });
@@ -72,7 +75,7 @@ public class Inbox extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
                                  @Override
                                  public void onClick(View v) {
-                                     requestImgDataFromService();
+                                     requestImgDataUpdate();
                                  }
                              }
         );
@@ -123,6 +126,8 @@ public class Inbox extends AppCompatActivity {
         startActivity(i);
     }
 
+
+    //Moved to imgViewer activity
     private void notifyImageDisplayed(int id){
         Intent i = new Intent("ImgDisplayed");
         i.putExtra("ID",Integer.toString(id));
@@ -191,6 +196,11 @@ public class Inbox extends AppCompatActivity {
 
     private void requestImgDataFromService(){
         Intent i = new Intent("ImgDataRequest");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(i);
+    }
+    private void requestImgDataUpdate(){
+        System.out.println("Button clicked");
+        Intent i = new Intent("ForceUpdateImage");
         LocalBroadcastManager.getInstance(this).sendBroadcast(i);
     }
 

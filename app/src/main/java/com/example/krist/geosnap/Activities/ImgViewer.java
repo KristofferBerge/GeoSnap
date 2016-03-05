@@ -29,6 +29,7 @@ public class ImgViewer extends AppCompatActivity {
     private View mContentView;
     private View mControlsView;
     private boolean mVisible;
+    private String imgId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +43,8 @@ public class ImgViewer extends AppCompatActivity {
 
         ImageView imgView = (ImageView) findViewById(R.id.img_viewer_content);
         Intent i = getIntent();
-        String id = i.getStringExtra("IMG-URI");
-        File f = new File(String.valueOf(this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)) +"/" + id + ".jpg");
+        imgId = i.getStringExtra("IMG-URI");
+        File f = new File(String.valueOf(this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)) +"/" + imgId + ".jpg");
         System.out.println(f.getAbsolutePath().toString());
         Bitmap bitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
         imgView.setImageResource(R.color.colorAccent);
@@ -53,5 +54,18 @@ public class ImgViewer extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        notifyImageDisplayed();
+    }
+
+    private void notifyImageDisplayed(){
+        Intent i = new Intent("ImgDisplayed");
+        i.putExtra("ID",imgId);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(i);
+        System.out.println("IMGDISPLAYED BROADCAST SENT");
     }
 }
