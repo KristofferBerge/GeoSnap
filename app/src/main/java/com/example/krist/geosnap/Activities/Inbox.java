@@ -102,12 +102,18 @@ public class Inbox extends AppCompatActivity {
         }
         //TODO: Do complete check if everything is good to go and start service'
 
+
+        //STARTS SERVICE MULTIPLE TIMES
+        /*
         GeoService s = new GeoService("GeoService");
         //TODO: Am i doing this right?
         Intent i = new Intent(this,GeoService.class);
         System.out.println(i.toString());
         System.out.println(s.toString());
         startService(i);
+        */
+
+        startService(new Intent(this,GeoService.class));
     }
 
     private void displayImgFullscreen(int id){

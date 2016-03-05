@@ -1,5 +1,7 @@
 package com.example.krist.geosnap.Services;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -30,6 +32,7 @@ import java.util.concurrent.ExecutionException;
 public class ApiCommunicator {
 
     public static String apiUrl = "http://geosnap.azurewebsites.net/api/Values";
+    //public static String apiUrl = "http://10.0.3.2:59623/api/Values";
     public Context C;
 
     public ApiCommunicator(Context c){
@@ -78,12 +81,19 @@ public class ApiCommunicator {
 
     public void UploadImage(Bitmap bm, double lat, double lng, String user) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG,100,baos);
+        bm.compress(Bitmap.CompressFormat.JPEG,50,baos);
         byte[] b = baos.toByteArray();
         //Bytearray to Base64 string
-        String encodedImage = Base64.encodeToString(b,Base64.URL_SAFE);
-        //StringParameters: 0:Base64Image 1:Latitude 2:Longitude 3:Username
-        new PostTask().execute(encodedImage,Double.toString(lat),Double.toString(lng),user);
+        try{
+            String encodedImage = Base64.encodeToString(b,Base64.URL_SAFE);
+            //StringParameters: 0:Base64Image 1:Latitude 2:Longitude 3:Username
+            new PostTask().execute(encodedImage,Double.toString(lat),Double.toString(lng),user);
+        }
+        catch(OutOfMemoryError e){
+            //Yes this has happened on my shitty S4 active
+            e.printStackTrace();
+            System.out.println("OUT OF MEMORY!!!!");
+        }
     }
 
     private class PostTask extends AsyncTask<String,String, String>{
@@ -96,6 +106,7 @@ public class ApiCommunicator {
                 String username = params[3];
 
                 URL url = new URL("http://geosnap.azurewebsites.net/api/Values?lat="+ lat + "&lng=" + lng + "&usr=" + username);
+                //URL url = new URL("http://10.0.3.2:59623/api/Values?lat="+ lat + "&lng=" + lng + "&usr=" + username);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 System.out.println("CONNECTING...");
                 con.setRequestMethod("POST");
