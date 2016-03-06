@@ -195,7 +195,7 @@ public class GeoService extends IntentService {
         //TODO: USE CONF ID WHEN IMPLEMENTED BY API
         int confId = settings.getInt(UserSettings.CONFID_SETTING, 0);
         if(loc != null){
-            apiCommunicator.UploadImage(fileDataProvider.getCachedImage(), loc.getLatitude(), loc.getLongitude(), username);
+            apiCommunicator.UploadImage(fileDataProvider.getCachedImage(), loc.getLatitude(), loc.getLongitude());
         }
         else{
             //TODO: Add message to user to explain why settings opens

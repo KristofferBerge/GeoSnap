@@ -15,7 +15,61 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="129dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Close application"
+        android:id="@+id/closeApplicationButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/LoginPageUsernameEditText"
+        android:layout_below="@+id/LoginPageUsernameLabel"
+        android:layout_alignLeft="@+id/closeApplicationButton"
+        android:layout_alignStart="@+id/closeApplicationButton"
+        android:layout_alignRight="@+id/closeApplicationButton"
+        android:layout_alignEnd="@+id/closeApplicationButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/LoginPageSaveUsernameButton"
+        android:layout_below="@+id/LoginPageUsernameEditText"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Username"
+        android:id="@+id/LoginPageUsernameLabel"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Logged in as"
+        android:id="@+id/LoginPageFacebookNameLabel"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/LoginPageFacebookNameTextView"
+        android:layout_below="@+id/LoginPageFacebookNameLabel"
+        android:layout_alignRight="@+id/LoginPageUsernameLabel"
+        android:layout_alignEnd="@+id/LoginPageUsernameLabel" />
 
 </RelativeLayout>

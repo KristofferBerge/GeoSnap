@@ -22,6 +22,9 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.kristomb.geosnap.Adapters.ImgDataAdapter;
 import com.kristomb.geosnap.Models.ImgData;
 import com.kristomb.geosnap.Models.ImgDataComparator;
@@ -56,7 +59,7 @@ public class Inbox extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
         setContentView(R.layout.activity_inbox);
         lv = (ListView) findViewById(R.id.listView);
@@ -113,17 +116,6 @@ public class Inbox extends AppCompatActivity {
         }
         //TODO: Do complete check if everything is good to go and start service'
 
-
-        //STARTS SERVICE MULTIPLE TIMES
-        /*
-        GeoService s = new GeoService("GeoService");
-        //TODO: Am i doing this right?
-        Intent i = new Intent(this,GeoService.class);
-        System.out.println(i.toString());
-        System.out.println(s.toString());
-        startService(i);
-        */
-
         startService(new Intent(this,GeoService.class));
     }
 
@@ -153,9 +145,20 @@ public class Inbox extends AppCompatActivity {
         startActivity(i);
     }
 
+    private void displayLoginPage(){
+        Intent i = new Intent(this,LoginScreen.class);
+        startActivity(i);
+    }
+
     @Override
     public void onStart() {
         super.onStart();
+
+        //TODO: Make generic static method to call in top of all activities
+        if(AccessToken.getCurrentAccessToken() == null ||AccessToken.getCurrentAccessToken().isExpired()){
+            displayLoginPage();
+            this.finish();
+        }
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -182,7 +185,7 @@ public class Inbox extends AppCompatActivity {
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(imgDataUpdateReciever, new IntentFilter("ImgDataUpdate"));
 
-        printKeyHash(this);
+        //printKeyHash(this);
     }
 
 

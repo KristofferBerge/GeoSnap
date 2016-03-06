@@ -1,5 +1,6 @@
 package com.kristomb.geosnap.Activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,6 +47,14 @@ public class UserSettings extends AppCompatActivity {
             }
         });
 
+        Button LoginPageButton = (Button) findViewById(R.id.openloginButton);
+        LoginPageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openLoginScreen();
+            }
+        });
+
         //Accessing shared preferences
         SharedPreferences settings = getSharedPreferences(USER_SETTINGS_RESOURCE, 0);
         String username = settings.getString(USERNAME_SETTING, "");
@@ -62,5 +71,10 @@ public class UserSettings extends AppCompatActivity {
             confIdTextField.setText(Integer.toString(confId));
         }
 
+    }
+
+    private void openLoginScreen(){
+        Intent i = new Intent(this,LoginScreen.class);
+        startActivity(i);
     }
 }
