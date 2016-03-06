@@ -1,7 +1,6 @@
-package com.example.krist.geosnap.Adapters;
+package com.kristomb.geosnap.Adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +8,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.krist.geosnap.Models.ImgData;
-import com.example.krist.geosnap.R;
+import com.kristomb.geosnap.Models.ImgData;
+import com.kristomb.geosnap.R;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**

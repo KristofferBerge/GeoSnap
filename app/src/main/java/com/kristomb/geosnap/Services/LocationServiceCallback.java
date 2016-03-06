@@ -1,4 +1,4 @@
-package com.example.krist.geosnap.Services;
+package com.kristomb.geosnap.Services;
 
 import android.Manifest;
 import android.app.Application;

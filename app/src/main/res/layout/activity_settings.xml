@@ -39,4 +39,12 @@
         android:id="@+id/confirmUserSettingUpdate"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Known limitations: Due to the android download manager's lack of permissions, external storage (SD-card) is required to use this app. "
+        android:id="@+id/Bug_info"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

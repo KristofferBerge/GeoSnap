@@ -1,7 +1,5 @@
-package com.example.krist.geosnap.Services;
+package com.kristomb.geosnap.Services;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,19 +9,13 @@ import android.os.Environment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Base64;
 
-import com.example.krist.geosnap.Models.ImgData;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 /**

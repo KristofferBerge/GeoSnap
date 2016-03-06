@@ -1,11 +1,11 @@
-package com.example.krist.geosnap.Controllers;
+package com.kristomb.geosnap.Controllers;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 
-import com.example.krist.geosnap.Models.ImgData;
-import com.example.krist.geosnap.Services.GeoService;
+import com.kristomb.geosnap.Models.ImgData;
+import com.kristomb.geosnap.Services.GeoService;
 
 import java.io.File;
 import java.io.FileInputStream;

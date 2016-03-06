@@ -1,6 +1,6 @@
-package com.example.krist.geosnap.Services;
+package com.kristomb.geosnap.Services;
 
-import com.example.krist.geosnap.Models.ImgData;
+import com.kristomb.geosnap.Models.ImgData;
 
 import org.json.JSONArray;
 

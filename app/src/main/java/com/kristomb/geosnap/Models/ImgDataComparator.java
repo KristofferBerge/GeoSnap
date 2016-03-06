@@ -1,4 +1,4 @@
-package com.example.krist.geosnap.Models;
+package com.kristomb.geosnap.Models;
 
 import java.util.Comparator;
 

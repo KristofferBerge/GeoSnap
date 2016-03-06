@@ -1,31 +1,39 @@
-package com.example.krist.geosnap.Activities;
+package com.kristomb.geosnap.Activities;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.example.krist.geosnap.Adapters.ImgDataAdapter;
-import com.example.krist.geosnap.Models.ImgData;
-import com.example.krist.geosnap.Models.ImgDataComparator;
-import com.example.krist.geosnap.R;
-import com.example.krist.geosnap.Services.GeoService;
+import com.kristomb.geosnap.Adapters.ImgDataAdapter;
+import com.kristomb.geosnap.Models.ImgData;
+import com.kristomb.geosnap.Models.ImgDataComparator;
+import com.kristomb.geosnap.R;
+import com.kristomb.geosnap.Services.GeoService;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -159,7 +167,7 @@ public class Inbox extends AppCompatActivity {
                 // Otherwise, set the URL to null.
                 Uri.parse("http://host/path"),
                 // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.example.krist.geosnap/http/host/path")
+                Uri.parse("android-app://com.krist.geosnap/http/host/path")
         );
 
         imgDataUpdateReciever = new BroadcastReceiver() {
@@ -174,7 +182,44 @@ public class Inbox extends AppCompatActivity {
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(imgDataUpdateReciever, new IntentFilter("ImgDataUpdate"));
 
+        printKeyHash(this);
     }
+
+
+    //For debugging
+    public static String printKeyHash(Activity context) {
+        PackageInfo packageInfo;
+        String key = null;
+        try {
+            //getting application package name, as defined in manifest
+            String packageName = context.getApplicationContext().getPackageName();
+
+            //Retriving package info
+            packageInfo = context.getPackageManager().getPackageInfo(packageName,
+                    PackageManager.GET_SIGNATURES);
+
+            Log.e("Package Name=", context.getApplicationContext().getPackageName());
+
+            for (Signature signature : packageInfo.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                key = new String(Base64.encode(md.digest(), 0));
+
+                // String key = new String(Base64.encodeBytes(md.digest()));
+                Log.e("Key Hash=", key);
+            }
+        } catch (PackageManager.NameNotFoundException e1) {
+            Log.e("Name not found", e1.toString());
+        }
+        catch (NoSuchAlgorithmException e) {
+            Log.e("No such an algorithm", e.toString());
+        } catch (Exception e) {
+            Log.e("Exception", e.toString());
+        }
+
+        return key;
+    }
+
 
     @Override
     public void onStop() {
@@ -190,7 +235,7 @@ public class Inbox extends AppCompatActivity {
                 // Otherwise, set the URL to null.
                 Uri.parse("http://host/path"),
                 // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.example.krist.geosnap/http/host/path")
+                Uri.parse("android-app://com.krist.geosnap/http/host/path")
         );
     }
 

@@ -1,4 +1,4 @@
-package com.example.krist.geosnap.Activities;
+package com.kristomb.geosnap.Activities;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,12 +15,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.krist.geosnap.R;
-
-import org.w3c.dom.Text;
+import com.kristomb.geosnap.R;
 
 import java.io.File;
-import java.io.IOException;
 
 public class ImgUploader extends AppCompatActivity {
 

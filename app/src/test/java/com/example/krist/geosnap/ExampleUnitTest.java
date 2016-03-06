@@ -1,4 +1,4 @@
-package com.example.krist.geosnap;
+package com.kristomb.geosnap;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.example.krist.geosnap.Services;
+package com.kristomb.geosnap.Services;
 
 import android.app.DownloadManager;
 import android.app.IntentService;
@@ -15,9 +15,9 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.example.krist.geosnap.Controllers.FileDataProvider;
-import com.example.krist.geosnap.Models.ImgData;
-import com.example.krist.geosnap.Activities.UserSettings;
+import com.kristomb.geosnap.Controllers.FileDataProvider;
+import com.kristomb.geosnap.Models.ImgData;
+import com.kristomb.geosnap.Activities.UserSettings;
 
 import java.util.ArrayList;
 

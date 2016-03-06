@@ -1,4 +1,4 @@
-package com.example.krist.geosnap.Activities;
+package com.kristomb.geosnap.Activities;
 
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.krist.geosnap.R;
+import com.kristomb.geosnap.R;
 
 public class UserSettings extends AppCompatActivity {
 
