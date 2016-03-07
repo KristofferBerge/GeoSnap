@@ -185,7 +185,7 @@ public class Inbox extends AppCompatActivity {
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(imgDataUpdateReciever, new IntentFilter("ImgDataUpdate"));
 
-        //printKeyHash(this);
+        printKeyHash(this);
     }
 
 

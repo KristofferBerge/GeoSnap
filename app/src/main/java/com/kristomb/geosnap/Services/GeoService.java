@@ -57,10 +57,6 @@ public class GeoService extends IntentService {
 
     @Override
     public void onCreate(){
-
-    }
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId){
         locationServiceCallback = new LocationServiceCallback(this);
         apiCommunicator = new ApiCommunicator(this);
         fileDataProvider = new FileDataProvider(this);
@@ -126,6 +122,10 @@ public class GeoService extends IntentService {
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(uploadImageReciever, new IntentFilter("UploadImage"));
+
+    }
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId){
 
         //Send image data back to activity when started
         sendImgDataToActivity();
