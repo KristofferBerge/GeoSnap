@@ -14,6 +14,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:versionName="Alpha 0.02"
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -44,7 +45,7 @@
             android:name=".Activities.ImgViewer"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_img_viewer"
-            android:theme="@style/FullscreenTheme" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".Activities.ImgUploader" />
         <activity android:name=".Activities.UserSettings" />
         <activity android:name=".Activities.LoginScreen"></activity>

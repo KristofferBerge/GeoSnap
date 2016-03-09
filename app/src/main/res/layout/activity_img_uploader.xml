@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="430dp"
         android:id="@+id/uploaderImageView"
-        android:rotation="90"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
     <ProgressBar

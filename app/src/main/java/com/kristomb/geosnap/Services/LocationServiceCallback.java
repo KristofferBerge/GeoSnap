@@ -2,6 +2,8 @@ package com.kristomb.geosnap.Services;
 
 import android.Manifest;
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -45,9 +47,11 @@ public class LocationServiceCallback extends Application implements GoogleApiCli
         return LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
     }
 
-    private void requestLocationUpdate() {
-        LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest = LocationRequest.create();
+    public void requestLocationUpdate() {
+
+        //TODO: Maybe call unrequestLocationUpdate to avoid double request if it is a problem.
+
+        LocationRequest mLocationRequest = LocationRequest.create();
         mLocationRequest.setInterval(2000);
         mLocationRequest.setFastestInterval(1000);
         mLocationRequest.setSmallestDisplacement(50);
@@ -61,9 +65,17 @@ public class LocationServiceCallback extends Application implements GoogleApiCli
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
     }
 
+    public void unRequestLocationUpdate(){
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+    }
+
     @Override
     public void onConnected(Bundle bundle) {
-        requestLocationUpdate();
+        SharedPreferences settings = ParentService.getSharedPreferences("UserSettings", 0);
+        boolean discoveryMode = settings.getBoolean("DiscoveryMode", false);
+        if(discoveryMode){
+            requestLocationUpdate();
+        }
     }
 
     @Override

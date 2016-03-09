@@ -96,10 +96,6 @@ public class LoginScreen extends AppCompatActivity {
     private void setVisibility(){
         //If not logged in
         if(AccessToken.getCurrentAccessToken() == null ||AccessToken.getCurrentAccessToken().isExpired()){
-            TextView LoggedInLabel = (TextView)findViewById(R.id.LoginPageFacebookNameLabel);
-            LoggedInLabel.setVisibility(View.INVISIBLE);
-            TextView LoggedInName = (TextView)findViewById(R.id.LoginPageFacebookNameTextView);
-            LoggedInName.setVisibility(View.INVISIBLE);
             Button SaveButton = (Button)findViewById(R.id.LoginPageSaveUsernameButton);
             SaveButton.setVisibility(View.INVISIBLE);
             EditText UsernameEditText = (EditText)findViewById(R.id.LoginPageUsernameEditText);

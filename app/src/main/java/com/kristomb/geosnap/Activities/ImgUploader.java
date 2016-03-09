@@ -1,20 +1,28 @@
 package com.kristomb.geosnap.Activities;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.kristomb.geosnap.Controllers.ImageProcessor;
 import com.kristomb.geosnap.R;
 
 import java.io.File;
@@ -41,7 +49,13 @@ public class ImgUploader extends AppCompatActivity {
         String filepath = dir + "/cachedImage.jpg";
         File file = new File(filepath);
         Uri fileUri = Uri.fromFile(file);
-        imgView.setImageURI(fileUri);
+        try {
+            ImageProcessor.resampleImageAndSaveToNewLocation(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Bitmap bm = BitmapFactory.decodeFile(filepath);
+        imgView.setImageBitmap(bm);
 
         uploadButton = (Button) findViewById(R.id.uploaderShareButton);
         uploadButton.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +86,6 @@ public class ImgUploader extends AppCompatActivity {
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(uploadStatusReciever, new IntentFilter("UploadStatus"));
-
     }
 
     private void requestUpload(){
@@ -81,7 +94,6 @@ public class ImgUploader extends AppCompatActivity {
         Intent i = new Intent("UploadImage");
         LocalBroadcastManager.getInstance(this).sendBroadcast(i);
     }
-
 
 
 }

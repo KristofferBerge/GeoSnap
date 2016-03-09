@@ -53,23 +53,4 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Logged in as"
-        android:id="@+id/LoginPageFacebookNameLabel"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/LoginPageFacebookNameTextView"
-        android:layout_below="@+id/LoginPageFacebookNameLabel"
-        android:layout_alignRight="@+id/LoginPageUsernameLabel"
-        android:layout_alignEnd="@+id/LoginPageUsernameLabel" />
-
 </RelativeLayout>

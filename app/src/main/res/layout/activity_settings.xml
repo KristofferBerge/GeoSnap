@@ -9,35 +9,48 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Activities.UserSettings">
 
-    <EditText
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Username"
-        android:ems="10"
-        android:id="@+id/usernameText"
+        android:layout_gravity="center_horizontal"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp" />
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/confirmationIdText"
-        android:layout_marginTop="41dp"
-        android:layout_below="@+id/usernameText"
-        android:layout_alignLeft="@+id/usernameText"
-        android:layout_alignStart="@+id/usernameText"
-        android:text="Confirmation ID" />
+        android:id="@+id/LoginPageUsernameEditText"
+        android:layout_below="@+id/LoginPageUsernameLabel"
+        android:layout_alignRight="@+id/login_button"
+        android:layout_alignEnd="@+id/login_button"
+        android:layout_alignLeft="@+id/login_button"
+        android:layout_alignStart="@+id/login_button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/LoginPageSaveUsernameButton"
+        android:layout_below="@+id/LoginPageUsernameEditText"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Username"
+        android:id="@+id/LoginPageUsernameLabel"
+        android:layout_marginTop="46dp"
+        android:layout_below="@+id/login_button"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save Changes"
-        android:id="@+id/confirmUserSettingUpdate"
-        android:layout_centerVertical="true"
+        android:id="@+id/saveSettingsButton"
+        android:layout_above="@+id/Bug_info"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -48,11 +61,39 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
-    <Button
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Open login page"
-        android:id="@+id/openloginButton"
-        android:layout_below="@+id/confirmUserSettingUpdate"
+        android:text="Get all images (Debugging mode)"
+        android:id="@+id/debugDiscoveryCheckbox"
+        android:checked="false"
+        android:layout_above="@+id/saveSettingsButton"
         android:layout_centerHorizontal="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Discovery mode"
+        android:id="@+id/discoveryModeSwitch"
+        android:checked="false"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rangeSeekBar"
+        android:layout_above="@+id/debugDiscoveryCheckbox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text=""
+        android:id="@+id/rangeSeekBarLabel"
+        android:layout_above="@+id/rangeSeekBar"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

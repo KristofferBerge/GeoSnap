@@ -32,6 +32,7 @@ public class GeoService extends IntentService {
     BroadcastReceiver downloadCompleteReciever;
     BroadcastReceiver imgDisplayedReciever;
     BroadcastReceiver uploadImageReciever;
+    BroadcastReceiver setDiscoveryModeReciever;
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -122,6 +123,20 @@ public class GeoService extends IntentService {
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(uploadImageReciever, new IntentFilter("UploadImage"));
+        setDiscoveryModeReciever = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Boolean setting = intent.getBooleanExtra("setting",true);
+                if(setting){
+                    locationServiceCallback.requestLocationUpdate();
+                }
+                else{
+                    locationServiceCallback.unRequestLocationUpdate();
+                }
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(setDiscoveryModeReciever,new IntentFilter("SetDiscoveryMode"));
+
 
     }
     @Override
@@ -180,7 +195,19 @@ public class GeoService extends IntentService {
 
     public void RequestApiCall(Location location){
         //TODO: replace test method with rest-call using location data
-        String result = apiCommunicator.getAllImages();
+
+        SharedPreferences settings =getSharedPreferences("UserSettings", 0);
+        boolean debugMode = settings.getBoolean("debugMode", false);
+        int range = settings.getInt("Range",50);
+        String result = null;
+        if(debugMode){
+            result = apiCommunicator.getAllImages();
+        }
+        else{
+            result = apiCommunicator.getImagesInRange(location, range);
+            System.out.println("DET FUNKER!!!!!!");
+        }
+
         ArrayList<ImgData> imgList = ImgProcessor.GetImgObjects(result,fileDataProvider.getCollectedImgs());
         fileDataProvider.addToImageList(imgList);
         sendImgDataToActivity();
@@ -189,11 +216,6 @@ public class GeoService extends IntentService {
     private void uploadImage(){
         //Get gps-position
         Location loc = locationServiceCallback.GetPosition();
-        //Accessing shared preferences
-        SharedPreferences settings = getSharedPreferences(UserSettings.USER_SETTINGS_RESOURCE, 0);
-        String username = settings.getString(UserSettings.USERNAME_SETTING, "unknown");
-        //TODO: USE CONF ID WHEN IMPLEMENTED BY API
-        int confId = settings.getInt(UserSettings.CONFID_SETTING, 0);
         if(loc != null){
             apiCommunicator.UploadImage(fileDataProvider.getCachedImage(), loc.getLatitude(), loc.getLongitude());
         }

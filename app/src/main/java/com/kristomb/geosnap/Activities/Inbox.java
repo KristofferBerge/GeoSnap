@@ -146,7 +146,7 @@ public class Inbox extends AppCompatActivity {
     }
 
     private void displayLoginPage(){
-        Intent i = new Intent(this,LoginScreen.class);
+        Intent i = new Intent(this,UserSettings.class);
         startActivity(i);
     }
 

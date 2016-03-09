@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -49,6 +50,16 @@ public class ApiCommunicator {
     public String getAllImages(){
         try {
             return new GetTask().execute("").get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public String getImagesInRange(Location loc, int range){
+        try {
+            return new GetTask().execute("?lat=" + loc.getLatitude() + "&lng=" + loc.getLongitude() + "&range=" + range).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
