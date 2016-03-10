@@ -33,6 +33,7 @@ public class GeoService extends IntentService {
     BroadcastReceiver imgDisplayedReciever;
     BroadcastReceiver uploadImageReciever;
     BroadcastReceiver setDiscoveryModeReciever;
+    BroadcastReceiver voteReceiver;
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -136,6 +137,15 @@ public class GeoService extends IntentService {
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(setDiscoveryModeReciever,new IntentFilter("SetDiscoveryMode"));
+        voteReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String username = intent.getStringExtra("username");
+                int vote = intent.getIntExtra("vote",0);
+                apiCommunicator.vote(username,vote);
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(voteReceiver,new IntentFilter("Vote"));
 
 
     }
@@ -205,7 +215,6 @@ public class GeoService extends IntentService {
         }
         else{
             result = apiCommunicator.getImagesInRange(location, range);
-            System.out.println("DET FUNKER!!!!!!");
         }
 
         ArrayList<ImgData> imgList = ImgProcessor.GetImgObjects(result,fileDataProvider.getCollectedImgs());

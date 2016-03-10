@@ -25,6 +25,8 @@ import com.facebook.login.widget.LoginButton;
 import com.kristomb.geosnap.R;
 import com.kristomb.geosnap.Services.ApiCommunicator;
 
+import org.w3c.dom.Text;
+
 public class UserSettings extends AppCompatActivity {
     CallbackManager callbackManager;
     Switch discoveryModeSwitch;
@@ -32,6 +34,7 @@ public class UserSettings extends AppCompatActivity {
     CheckBox debugDiscoveryCheckbox;
     Button saveSettingsButton;
     AccessTokenTracker accessTokenTracker;
+    TextView reputationTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,8 @@ public class UserSettings extends AppCompatActivity {
         rangeSeekBar = (SeekBar)findViewById(R.id.rangeSeekBar);
         debugDiscoveryCheckbox = (CheckBox)findViewById(R.id.debugDiscoveryCheckbox);
         saveSettingsButton = (Button)findViewById(R.id.saveSettingsButton);
+        reputationTextView = (TextView)findViewById(R.id.reputationTextView);
+
 
 
 
@@ -163,6 +168,8 @@ public class UserSettings extends AppCompatActivity {
                 setNonLoginSettingsEnabled(false);
                 return;
             }
+            String rating = communicator.getRating();
+            reputationTextView.setText(rating);
             //if user is registered
             Button SaveButton = (Button)findViewById(R.id.LoginPageSaveUsernameButton);
             SaveButton.setVisibility(View.INVISIBLE);

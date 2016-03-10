@@ -8,13 +8,20 @@
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
-
+    <ImageView
+        android:id="@+id/img_viewer_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:background="@color/colorAccent"/>
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:layout_gravity="right|top">
 
         <LinearLayout
             android:id="@+id/fullscreen_content_controls"
@@ -26,24 +33,34 @@
             android:orientation="horizontal"
             tools:ignore="UselessParent">
 
-            <Button
-                android:id="@+id/dummy_button"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dummy_button" />
-
         </LinearLayout>
+
+        <ImageButton
+            android:layout_width="110dp"
+            android:layout_height="90dp"
+            android:id="@+id/downvote"
+            android:src="@drawable/downvote"
+            android:alpha="0.7"
+            android:layout_gravity="left|bottom" />
+        <ImageButton
+            android:layout_width="170dp"
+            android:layout_height="90dp"
+            android:id="@+id/mehvote"
+            android:src="@drawable/mehvote"
+            android:scaleType="fitCenter"
+            android:alpha="0.7"
+
+            android:layout_gravity="center|bottom" />
+        <ImageButton
+            android:layout_width="110dp"
+            android:layout_height="90dp"
+            android:id="@+id/upvote"
+            android:src="@drawable/upvote"
+            android:alpha="0.7"
+
+            android:layout_gravity="right|bottom" />
 
     </FrameLayout>
 
-    <ImageView
-        android:id="@+id/img_viewer_content"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
-        android:keepScreenOn="true"
-        android:background="@color/colorAccent"/>
 
 </FrameLayout>

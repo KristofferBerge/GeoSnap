@@ -73,7 +73,7 @@ public class Inbox extends AppCompatActivity {
                 ImgData data = (ImgData) parent.getAdapter().getItem(position);
                 if (!data.getSeenStatus() && data.getLoadedStatus()) {
                     //Opening new fullscreen activity to display image
-                    displayImgFullscreen(data.getImgId());
+                    displayImgFullscreen(data.getImgId(),data.getUser());
 
 
                     //TODO: Remove this. Method moved to imgViewer activity
@@ -119,10 +119,11 @@ public class Inbox extends AppCompatActivity {
         startService(new Intent(this,GeoService.class));
     }
 
-    private void displayImgFullscreen(int id){
+    private void displayImgFullscreen(int id,String username){
         ImgViewer viewer = new ImgViewer();
         Intent i = new Intent(this,ImgViewer.class);
         i.putExtra("IMG-URI", Integer.toString(id));
+        i.putExtra("username",username);
         startActivity(i);
     }
 

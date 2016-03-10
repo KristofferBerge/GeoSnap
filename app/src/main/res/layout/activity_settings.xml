@@ -96,4 +96,21 @@
         android:layout_above="@+id/rangeSeekBar"
         android:layout_centerHorizontal="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Reputation:"
+        android:id="@+id/reputationLabel"
+        android:layout_below="@+id/login_button"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/reputationTextView"
+        android:layout_below="@+id/reputationLabel"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

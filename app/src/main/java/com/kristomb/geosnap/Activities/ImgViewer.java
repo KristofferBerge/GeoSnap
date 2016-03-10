@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.kristomb.geosnap.R;
@@ -34,6 +35,7 @@ public class ImgViewer extends AppCompatActivity {
     private View mControlsView;
     private boolean mVisible;
     private String imgId;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +52,36 @@ public class ImgViewer extends AppCompatActivity {
         ImageView imgView = (ImageView) findViewById(R.id.img_viewer_content);
         Intent i = getIntent();
         imgId = i.getStringExtra("IMG-URI");
+        username = i.getStringExtra("username");
         File f = new File(String.valueOf(this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)) +"/" + imgId + ".jpg");
         System.out.println(f.getAbsolutePath().toString());
         Bitmap bitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
         bitmap = scaleBitmap(bitmap);
         imgView.setImageResource(R.color.colorAccent);
         imgView.setImageBitmap(bitmap);
+
+        ImageButton downVoteButton = (ImageButton) findViewById(R.id.downvote);
+        downVoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                vote(-1);
+            }
+        });
+        ImageButton mehVoteButton = (ImageButton) findViewById(R.id.mehvote);
+        mehVoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                vote(0);
+            }
+        });
+        ImageButton upVoteButton = (ImageButton) findViewById(R.id.upvote);
+        upVoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                vote(1);
+            }
+        });
+
     }
 
     @Override
@@ -67,6 +93,14 @@ public class ImgViewer extends AppCompatActivity {
     protected void onDestroy(){
         super.onDestroy();
         notifyImageDisplayed();
+    }
+
+    private void vote(int vote){
+        Intent i = new Intent("Vote");
+        i.putExtra("username",username);
+        i.putExtra("vote",vote);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(i);
+        this.finish();
     }
 
     private void notifyImageDisplayed(){

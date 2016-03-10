@@ -28,6 +28,7 @@ public class ApiCommunicator {
 
     public static String apiUrl = "http://geosnap.azurewebsites.net/api/Values";
     public static String usernameApiUrl ="http://geosnap.azurewebsites.net/api/User";
+    public static String voteApiUrl ="http://geosnap.azurewebsites.net/api/Vote";
     //public static String apiUrl = "http://10.0.3.2:59623/api/Values";
     public Context C;
 
@@ -81,6 +82,27 @@ public class ApiCommunicator {
     public String setUsername(String username){
         try {
             return new PostUsernameTask().execute(username).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public String getRating(){
+        try{
+            return new GetRatingTask().execute("").get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String vote(String username, int vote){
+        try {
+            return new PostVoteTask().execute(username, Integer.toString(vote)).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -297,6 +319,78 @@ public class ApiCommunicator {
                 System.out.print("ERROR!");
             }
             return null;
+        }
+    }
+    private class PostVoteTask extends AsyncTask<String,Void, String>{
+        @Override
+        protected String doInBackground(String... params) {
+            try{
+                String username = params[0];
+                String voteString = params[1];
+                int vote = Integer.parseInt(voteString);
+                URL url = new URL(voteApiUrl + "?username=" + username + "&vote=" + vote);
+                //TODO: check if accesstoken is valid
+                String accessToken = AccessToken.getCurrentAccessToken().getToken();
+
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestProperty("Authorization", accessToken);
+                System.out.println("CONNECTING...");
+                con.setRequestMethod("POST");
+                con.disconnect();
+                return Integer.toString(con.getResponseCode());
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                System.out.print("ERROR!");
+            }
+            return null;
+        }
+    }
+
+    private class GetRatingTask extends AsyncTask<String, Void, String>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            try{
+                URL url = new URL(voteApiUrl);
+                //Connecting to api
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestProperty("Authorization",AccessToken.getCurrentAccessToken().getToken());
+                try{
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String line;
+                    //Constructing string of result
+                    while((line = bufferedReader.readLine()) != null){
+                        stringBuilder.append(line).append("\n");
+                    }
+                    //Returning result as string
+                    System.out.println("RESPONSE: " + con.getResponseCode());
+                    return stringBuilder.toString();
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                    System.out.println("FAILED TO PROCESS DATA");
+                }
+                finally {
+                    System.out.println("RESPONSE: " + con.getResponseCode());
+                    con.disconnect();
+                }
+            }
+            catch(Exception e){
+                System.out.println("FAILED TO CONNECT TO API");
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            //this method will be running on UI thread
         }
     }
 }
