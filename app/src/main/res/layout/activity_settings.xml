@@ -7,6 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:id="@+id/settings_layout"
     tools:context=".Activities.UserSettings">
 
     <com.facebook.login.widget.LoginButton
@@ -38,8 +39,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Username"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Username:"
         android:id="@+id/LoginPageUsernameLabel"
         android:layout_marginTop="46dp"
         android:layout_below="@+id/login_button"

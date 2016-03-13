@@ -2,7 +2,9 @@ package com.kristomb.geosnap.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -28,6 +32,10 @@ import com.kristomb.geosnap.Services.ApiCommunicator;
 import org.w3c.dom.Text;
 
 public class UserSettings extends AppCompatActivity {
+
+    String username;
+    String reputation;
+
     CallbackManager callbackManager;
     Switch discoveryModeSwitch;
     SeekBar rangeSeekBar;
@@ -35,6 +43,15 @@ public class UserSettings extends AppCompatActivity {
     Button saveSettingsButton;
     AccessTokenTracker accessTokenTracker;
     TextView reputationTextView;
+
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        refreshUserInfo();
+        loadSettings();
+        setVisibility();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,9 +125,6 @@ public class UserSettings extends AppCompatActivity {
             }
         });
 
-        loadSettings();
-        setVisibility();
-
         Button saveChangesButton = (Button) findViewById(R.id.saveSettingsButton);
         saveChangesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,6 +152,22 @@ public class UserSettings extends AppCompatActivity {
         }
     }
 
+    private void refreshUserInfo(){
+        ApiCommunicator communicator = new ApiCommunicator(this);
+        username = communicator.getUsername();
+        username = username.replace("\"", "");
+        reputation = communicator.getRating();
+        reputation = reputation.replace("\"", "");
+
+        //Networks that require password login in browser can respond to our get-request with that page.
+        //Checking length and displaying error message if the username is too long.
+        if(username.length() > 20){
+            showSnackbar(snackbarMessage.ERROR_LOADING_SETTINGS);
+            username = "";
+            reputation = "";
+        }
+    }
+
     private void setVisibility(){
 
         //If not logged in
@@ -150,8 +180,6 @@ public class UserSettings extends AppCompatActivity {
         }
         //if logged in
         else{
-            ApiCommunicator communicator = new ApiCommunicator(this);
-            String username = communicator.getUsername();
             //If user is not registered in database
             if(username == "Enter username"){
                 Button SaveButton = (Button)findViewById(R.id.LoginPageSaveUsernameButton);
@@ -168,14 +196,17 @@ public class UserSettings extends AppCompatActivity {
                 setNonLoginSettingsEnabled(false);
                 return;
             }
-            String rating = communicator.getRating();
-            reputationTextView.setText(rating);
+            reputationTextView.setText(reputation);
             //if user is registered
             Button SaveButton = (Button)findViewById(R.id.LoginPageSaveUsernameButton);
             SaveButton.setVisibility(View.INVISIBLE);
             EditText UsernameEditText = (EditText)findViewById(R.id.LoginPageUsernameEditText);
             UsernameEditText.setText(username.toString());
             UsernameEditText.setEnabled(false);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                UsernameEditText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            }
+            UsernameEditText.setTextSize(25);
             setNonLoginSettingsEnabled(true);
         }
     }
@@ -196,9 +227,18 @@ public class UserSettings extends AppCompatActivity {
     }
 
     private void registerUsername(){
-        System.out.println("ADDED USERNAME TO DATABASE");
         EditText UsernameEditText = (EditText)findViewById(R.id.LoginPageUsernameEditText);
         String username = UsernameEditText.getText().toString();
+        //checking username length
+        if(username.length() > 20){
+            showSnackbar(snackbarMessage.USERNAME_TOO_LONG);
+            return;
+        }
+        if(username.length() < 3){
+            showSnackbar(snackbarMessage.USERNAME_TOO_SHORT);
+            return;
+        }
+        System.out.println("ADDED USERNAME TO DATABASE");
         ApiCommunicator communicator = new ApiCommunicator(this);
         String result = communicator.setUsername(username);
         System.out.println(result);
@@ -208,7 +248,7 @@ public class UserSettings extends AppCompatActivity {
     private void saveSettings(){
         SharedPreferences settings = getSharedPreferences("UserSettings", 0);
         SharedPreferences.Editor settingsEditor = settings.edit();
-        settingsEditor.putBoolean("DiscoveryMode",discoveryModeSwitch.isChecked());
+        settingsEditor.putBoolean("DiscoveryMode", discoveryModeSwitch.isChecked());
 
         //Send broadcast to let service know that discovery mode may have changed
         Intent i = new Intent("SetDiscoveryMode");
@@ -228,5 +268,42 @@ public class UserSettings extends AppCompatActivity {
         rangeSeekBar.setProgress(range);
         boolean debugMode = settings.getBoolean("debugMode",false);
         debugDiscoveryCheckbox.setChecked(debugMode);
+    }
+
+    private enum snackbarMessage{
+        USERNAME_TOO_LONG,
+        USERNAME_TOO_SHORT,
+        ERROR_LOADING_SETTINGS
+    };
+
+    private void showSnackbar(snackbarMessage message){
+        //Creating snackbar and getting properties
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.settings_layout);
+        Snackbar sb = Snackbar.make(layout, "", Snackbar.LENGTH_LONG);
+        View sbView = sb.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+
+        if(message == snackbarMessage.ERROR_LOADING_SETTINGS){
+            sb.setText("Error loading settings, please check your connection...");
+            textView.setTextColor(Color.RED);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            }
+        }
+        else if(message == snackbarMessage.USERNAME_TOO_LONG){
+            sb.setText("Username too long");
+            textView.setTextColor(Color.RED);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            }
+        }
+        else if(message == snackbarMessage.USERNAME_TOO_SHORT){
+            sb.setText("Username too short");
+            textView.setTextColor(Color.RED);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            }
+        }
+        sb.show();
     }
 }

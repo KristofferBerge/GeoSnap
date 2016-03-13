@@ -22,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 public class ImgDataAdapter extends ArrayAdapter<ImgData> {
 
     ArrayList<ImgData> Resource;
+    Context C = super.getContext();
 
     public ImgDataAdapter(Context context, ArrayList<ImgData> resource) {
         super(context, -1, resource);
@@ -36,30 +37,11 @@ public class ImgDataAdapter extends ArrayAdapter<ImgData> {
         TextView ageView = (TextView) rowView.findViewById(R.id.Age);
         ImageView icon = (ImageView) rowView.findViewById(R.id.SeenIcon);
         userNameView.setText(Resource.get(position).getUser());
-
         Date date = new Date();
         Timestamp now = new Timestamp(date.getTime());
         long diff = now.getTime() - Resource.get(position).getmTimestamp().getTime();
-        String text = "";
 
-        //TODO: Should probably be own function
-        if(TimeUnit.MILLISECONDS.toMinutes(diff) < 59){
-            text = TimeUnit.MILLISECONDS.toMinutes(diff)
-                    + " " + super.getContext().getString(R.string.minutes)
-                    + " " + super.getContext().getString(R.string.ago);
-        }
-        else if(TimeUnit.MILLISECONDS.toHours(diff) < 23){
-            text = TimeUnit.MILLISECONDS.toHours(diff)
-                            + " " + super.getContext().getString(R.string.hours)
-                            + " " + super.getContext().getString(R.string.ago);
-        }
-        else{
-            text = TimeUnit.MILLISECONDS.toDays(diff)
-                            + " " + super.getContext().getString(R.string.days)
-                            + " " + super.getContext().getString(R.string.ago);
-            System.out.println("IS" + TimeUnit.MILLISECONDS.toDays(diff) + "DAYS");
-        }
-        ageView.setText(text);
+        ageView.setText(getAgeInText(diff));
 
         if(Resource.get(position).getSeenStatus()){
             icon.setImageResource(R.color.black_overlay);
@@ -69,5 +51,50 @@ public class ImgDataAdapter extends ArrayAdapter<ImgData> {
         }
 
         return rowView;
+    }
+    //Reason for "weird" order: A image will most likely be several hours old. Days will probably never be used due to implemented max-age
+    private String getAgeInText(long diff){
+        String timeText = "";
+        long hours = TimeUnit.MILLISECONDS.toHours(diff);
+        if(hours > 0 && hours < 24){
+            timeText += hours + " ";
+            if(hours == 1){
+                timeText += C.getString(R.string.hour);
+            }
+            else{
+                timeText += C.getString(R.string.hours);
+            }
+            timeText += " " + C.getString(R.string.ago);
+            return timeText;
+        }
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
+        if(minutes > 0 && minutes < 60){
+            timeText += minutes + " ";
+            if(minutes == 1){
+                timeText += C.getString(R.string.minute);
+            }
+            else{
+                timeText += C.getString(R.string.minutes);
+            }
+            timeText += " " + C.getString(R.string.ago);
+            return timeText;
+        }
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(diff);
+        if(seconds > 0 && seconds < 60){
+            timeText += seconds + " ";
+            if(seconds == 1){
+                timeText += C.getString(R.string.second);
+            }
+            else{
+                timeText += C.getString(R.string.seconds);
+            }
+            timeText += " " + C.getString(R.string.ago);
+            return timeText;
+        }
+        else{
+            return TimeUnit.MILLISECONDS.toDays(diff)
+                    + " " + super.getContext().getString(R.string.days)
+                    + " " + super.getContext().getString(R.string.ago);
+        }
     }
 }

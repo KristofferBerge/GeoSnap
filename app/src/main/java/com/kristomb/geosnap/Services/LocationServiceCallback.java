@@ -44,11 +44,16 @@ public class LocationServiceCallback extends Application implements GoogleApiCli
             // for ActivityCompat#requestPermissions for more details.
             return null;
         }
-        return LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if(mGoogleApiClient.isConnected()){
+            return LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        }
+        else{
+            mGoogleApiClient.connect();
+            return null;
+        }
     }
 
     public void requestLocationUpdate() {
-
         //TODO: Maybe call unrequestLocationUpdate to avoid double request if it is a problem.
 
         LocationRequest mLocationRequest = LocationRequest.create();

@@ -84,11 +84,15 @@ public class GeoService extends IntentService {
                     System.out.println("Location found, updating");
                     RequestApiCall(lastknownLocation);
                 }
-                System.out.println("No location found");
-                //TODO: Error if no position is found
+                else{
+                    sendErrorToInbox(400);
+                    System.out.println("No location found");
+                }
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(forceUpdateRequestReciever, new IntentFilter("ForceUpdateImage"));
+
+
 
         //Broadcastreciever for completed download
         downloadCompleteReciever = new BroadcastReceiver() {
@@ -151,7 +155,6 @@ public class GeoService extends IntentService {
     }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
-
         //Send image data back to activity when started
         sendImgDataToActivity();
 
@@ -163,7 +166,15 @@ public class GeoService extends IntentService {
     private void sendImgDataToActivity(){
         ArrayList<ImgData> list = fileDataProvider.getImageList();
         Intent i = new Intent("ImgDataUpdate");
-        i.putExtra("ArrayList<ImgData>",list);
+        i.putExtra("ArrayList<ImgData>", list);
+        i.putExtra("status",200);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(i);
+    }
+    private void sendErrorToInbox(int errorCode){
+        ArrayList<ImgData> list = fileDataProvider.getImageList();
+        Intent i = new Intent("ImgDataUpdate");
+        i.putExtra("ArrayList<ImgData>", list);
+        i.putExtra("status",errorCode);
         LocalBroadcastManager.getInstance(this).sendBroadcast(i);
     }
 
@@ -186,8 +197,6 @@ public class GeoService extends IntentService {
             Uri url = Uri.parse(urlString);
             downloader.enqueue(new DownloadManager.Request(url)
                     .setTitle(String.valueOf(id))
-                            //TODO: REMOVE. ONLY FOR DEBUGGING
-                    .setVisibleInDownloadsUi(true)
                     .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
                     .setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, id + ".jpg"));
             System.out.println("Downloading image: " + id);
@@ -204,8 +213,6 @@ public class GeoService extends IntentService {
 
 
     public void RequestApiCall(Location location){
-        //TODO: replace test method with rest-call using location data
-
         SharedPreferences settings =getSharedPreferences("UserSettings", 0);
         boolean debugMode = settings.getBoolean("debugMode", false);
         int range = settings.getInt("Range",50);

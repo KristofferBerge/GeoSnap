@@ -1,9 +1,14 @@
 <resources>
     <string name="app_name">GeoSnap</string>
     <string name="facebook_app_id">459343100932396</string>
+    <string name="second">second</string>
+    <string name="seconds">seconds</string>
     <string name="hours">hours</string>
+    <string name="hour">hour</string>
     <string name="minutes">minutes</string>
+    <string name="minute">minute</string>
     <string name="days">days</string>
+    <string name="day">day</string>
     <string name="ago">ago</string>
 
     <string name="title_activity_img_viewer">ImgViewer</string>

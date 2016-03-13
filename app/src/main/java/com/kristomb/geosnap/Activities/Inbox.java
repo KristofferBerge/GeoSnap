@@ -9,18 +9,27 @@ import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
@@ -32,6 +41,8 @@ import com.kristomb.geosnap.R;
 import com.kristomb.geosnap.Services.GeoService;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.common.GoogleApiAvailability;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,13 +58,55 @@ public class Inbox extends AppCompatActivity {
     private ListView lv;
     private ArrayList<ImgData> inboxSource = new ArrayList<ImgData>();
     private ImgDataAdapter imgDataAdapter;
+    private ArrayAdapter emptyAdapter;
+    SwipeRefreshLayout swipeLayout;
 
     private void setInboxSource(ArrayList<ImgData> data){
         inboxSource.clear();
         for(ImgData d: data){
             inboxSource.add(d);
         }
+        //If no images, show empty text
+        if(data.size() == 0){
+            lv.setAdapter(emptyAdapter);
+            lv.setEnabled(false);
+            return;
+        }
+        //If empty text is shown, switch back to imgDataAdapter
+        if(lv.getAdapter() != imgDataAdapter){
+            lv.setAdapter(imgDataAdapter);
+            lv.setEnabled(true);
+        }
         imgDataAdapter.notifyDataSetChanged();
+    }
+
+    //Possible error-messages that can be shown in snackbar
+    private enum snackbarMessage{
+        NO_LOCATION_AVAILABLE,
+        GENERAL_ERROR_LOADING_IMAGEDATA
+    };
+
+    //Adding buttons to actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.inbox_menu,menu);
+        return true;
+    }
+
+    //Event handler for buttons on actionbar
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.settings_menu_item:
+                displaySettings();
+                return true;
+            case R.id.capture_menu_item:
+                startCamera();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -63,17 +116,27 @@ public class Inbox extends AppCompatActivity {
 
         setContentView(R.layout.activity_inbox);
         lv = (ListView) findViewById(R.id.listView);
+
+        //Creating custom adapter to display images
         imgDataAdapter = new ImgDataAdapter(this,inboxSource);
-        //ImgDataAdapter arrayAdapter = new ImgDataAdapter(this, inboxSource);
+
+        //Creating empty adapter to display if inbox is empty
+        emptyAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
+        emptyAdapter.add("You have no images. Go out and find some!");
+
+
         lv.setAdapter(imgDataAdapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(parent.getAdapter() == emptyAdapter){
+                    return;
+                }
                 //Only allow click event if image is loaded and not viewed.
                 ImgData data = (ImgData) parent.getAdapter().getItem(position);
                 if (!data.getSeenStatus() && data.getLoadedStatus()) {
                     //Opening new fullscreen activity to display image
-                    displayImgFullscreen(data.getImgId(),data.getUser());
+                    displayImgFullscreen(data.getImgId(), data.getUser());
 
 
                     //TODO: Remove this. Method moved to imgViewer activity
@@ -82,30 +145,16 @@ public class Inbox extends AppCompatActivity {
                 }
             }
         });
-        Button b = (Button) findViewById(R.id.testKnapp);
-        b.setOnClickListener(new View.OnClickListener() {
-                                 @Override
-                                 public void onClick(View v) {
-                                     requestImgDataUpdate();
-                                 }
-                             }
-        );
-        Button b2 = (Button) findViewById(R.id.uploadTest);
-        b2.setOnClickListener(new View.OnClickListener() {
-                                 @Override
-                                 public void onClick(View v) {
-                                    startCamera();
-                                 }
-                             }
-        );
-        Button settingsButton = (Button) findViewById(R.id.openSettingsButton);
-        settingsButton.setOnClickListener(new View.OnClickListener() {
+
+        //Event handler on pull to refresh inbox
+        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.pulltorefresh_container);
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View v) {
-                displaySettings();
+            public void onRefresh() {
+                swipeLayout.setRefreshing(true);
+                requestImgDataUpdate();
             }
         });
-
 
         //Checking if google play services is available
         int r = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
@@ -123,7 +172,7 @@ public class Inbox extends AppCompatActivity {
         ImgViewer viewer = new ImgViewer();
         Intent i = new Intent(this,ImgViewer.class);
         i.putExtra("IMG-URI", Integer.toString(id));
-        i.putExtra("username",username);
+        i.putExtra("username", username);
         startActivity(i);
     }
 
@@ -178,19 +227,57 @@ public class Inbox extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 System.out.println("ACTIVITY RECIEVED UPDATED IMAGES");
-                ArrayList<ImgData> imgList = (ArrayList<ImgData>) intent.getSerializableExtra("ArrayList<ImgData>");
-                Collections.sort(imgList, new ImgDataComparator());
-                setInboxSource(imgList);
-                System.out.println("UPDATED IMAGE LIST IS SIZE: " + imgList.size());
+
+                int statusCode = intent.getIntExtra("status",500);
+                if(statusCode == 200){
+                    ArrayList<ImgData> imgList = (ArrayList<ImgData>) intent.getSerializableExtra("ArrayList<ImgData>");
+                    Collections.sort(imgList, new ImgDataComparator());
+                    setInboxSource(imgList);
+                    swipeLayout.setRefreshing(false);
+                    System.out.println("UPDATED IMAGE LIST IS SIZE: " + imgList.size());
+                }
+                else if(statusCode == 400){
+                    showSnackbar(snackbarMessage.NO_LOCATION_AVAILABLE);
+                    swipeLayout.setRefreshing(false);
+                }
+                else if(statusCode == 500){
+                    showSnackbar(snackbarMessage.GENERAL_ERROR_LOADING_IMAGEDATA);
+                    swipeLayout.setRefreshing(false);
+                }
+
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(imgDataUpdateReciever, new IntentFilter("ImgDataUpdate"));
 
+        //TODO: only for debugging
         printKeyHash(this);
     }
 
+    private void showSnackbar(snackbarMessage message){
+        //Creating snackbar and getting properties
+        Snackbar sb = Snackbar.make(swipeLayout, "", Snackbar.LENGTH_LONG);
+        View sbView = sb.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
 
-    //For debugging
+        if(message == snackbarMessage.NO_LOCATION_AVAILABLE){
+            sb.setText("No gps-data available, please check your settings...");
+            textView.setTextColor(Color.RED);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            }
+        }
+        else if(message == snackbarMessage.GENERAL_ERROR_LOADING_IMAGEDATA){
+            sb.setText("Updating failed, please try again...");
+            textView.setTextColor(Color.RED);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            }
+        }
+        sb.show();
+    }
+
+
+    //TODO: only for debugging
     public static String printKeyHash(Activity context) {
         PackageInfo packageInfo;
         String key = null;

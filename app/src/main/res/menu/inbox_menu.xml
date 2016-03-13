@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/capture_menu_item"
+        android:icon="@drawable/ic_camera_alt_24dp"
+        android:fillColor="@color/colorAccent"
+        android:title="Capture"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/settings_menu_item"
+        android:icon="@drawable/ic_setting_dark"
+        android:title="Settings"
+        app:showAsAction="ifRoom"/>
 </menu>
