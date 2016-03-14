@@ -155,12 +155,23 @@ public class UserSettings extends AppCompatActivity {
     private void refreshUserInfo(){
         ApiCommunicator communicator = new ApiCommunicator(this);
         username = communicator.getUsername();
-        username = username.replace("\"", "");
+        if(username != null){
+            username = username.replace("\"", "");
+        }
         reputation = communicator.getRating();
-        reputation = reputation.replace("\"", "");
+        if(reputation != null){
+            reputation = reputation.replace("\"", "");
+        }
 
         //Networks that require password login in browser can respond to our get-request with that page.
         //Checking length and displaying error message if the username is too long.
+        if(username == null || username.length() > 20){
+            showSnackbar(snackbarMessage.ERROR_LOADING_SETTINGS);
+            username = "";
+            reputation = "";
+            return;
+        }
+
         if(username.length() > 20){
             showSnackbar(snackbarMessage.ERROR_LOADING_SETTINGS);
             username = "";

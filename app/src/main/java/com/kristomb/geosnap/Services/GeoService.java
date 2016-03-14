@@ -82,7 +82,9 @@ public class GeoService extends IntentService {
                 Location lastknownLocation = locationServiceCallback.GetPosition();
                 if(lastknownLocation != null){
                     System.out.println("Location found, updating");
-                    RequestApiCall(lastknownLocation);
+                    //RequestApiCall(lastknownLocation);
+                    Runnable r = new RequestApiThread(lastknownLocation);
+                    new Thread(r).start();
                 }
                 else{
                     sendErrorToInbox(400);
@@ -227,6 +229,29 @@ public class GeoService extends IntentService {
         ArrayList<ImgData> imgList = ImgProcessor.GetImgObjects(result,fileDataProvider.getCollectedImgs());
         fileDataProvider.addToImageList(imgList);
         sendImgDataToActivity();
+    }
+
+    public class RequestApiThread implements Runnable{
+        Location location;
+        public RequestApiThread(Location location){
+            this.location = location;
+        }
+        public void run(){
+            SharedPreferences settings =getSharedPreferences("UserSettings", 0);
+            boolean debugMode = settings.getBoolean("debugMode", false);
+            int range = settings.getInt("Range",50);
+            String result = null;
+            if(debugMode){
+                result = apiCommunicator.getAllImages();
+            }
+            else{
+                result = apiCommunicator.getImagesInRange(location, range);
+            }
+
+            ArrayList<ImgData> imgList = ImgProcessor.GetImgObjects(result,fileDataProvider.getCollectedImgs());
+            fileDataProvider.addToImageList(imgList);
+            sendImgDataToActivity();
+        }
     }
 
     private void uploadImage(){

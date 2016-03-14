@@ -151,7 +151,6 @@ public class Inbox extends AppCompatActivity {
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeLayout.setRefreshing(true);
                 requestImgDataUpdate();
             }
         });
@@ -338,6 +337,7 @@ public class Inbox extends AppCompatActivity {
         System.out.println("Button clicked");
         Intent i = new Intent("ForceUpdateImage");
         LocalBroadcastManager.getInstance(this).sendBroadcast(i);
+        swipeLayout.setRefreshing(true);
     }
 
 
