@@ -163,6 +163,15 @@ public class FileDataProvider {
         removeDisplayedImageFiles();
     }
 
+    public int getNumberOfUnviewedImages(){
+        int i = 0;
+        for(ImgData img: getImageList()){
+            if(!img.getSeenStatus())
+                i++;
+        }
+        return i;
+    }
+
 
 
 

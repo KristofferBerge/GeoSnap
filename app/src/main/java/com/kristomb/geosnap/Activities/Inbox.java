@@ -2,6 +2,7 @@ package com.kristomb.geosnap.Activities;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -202,6 +203,10 @@ public class Inbox extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+
+        //Cancelling notifications when inbox is opened
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.cancel(1772);
 
         //TODO: Make generic static method to call in top of all activities
         if(AccessToken.getCurrentAccessToken() == null ||AccessToken.getCurrentAccessToken().isExpired()){

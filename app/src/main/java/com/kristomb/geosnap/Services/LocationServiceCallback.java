@@ -57,9 +57,7 @@ public class LocationServiceCallback extends Application implements GoogleApiCli
         //TODO: Maybe call unrequestLocationUpdate to avoid double request if it is a problem.
 
         LocationRequest mLocationRequest = LocationRequest.create();
-        mLocationRequest.setInterval(2000);
-        mLocationRequest.setFastestInterval(1000);
-        mLocationRequest.setSmallestDisplacement(50);
+        mLocationRequest.setInterval(300000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         //Checking if the app has sufficient permissions to request location
