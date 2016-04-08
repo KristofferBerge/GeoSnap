@@ -1,5 +1,7 @@
 package com.kristomb.geosnap.Activities;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -8,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -107,6 +110,7 @@ public class UserSettings extends AppCompatActivity {
                 System.out.println("LOGIN ERROR");
             }
         });
+
         //Tracking changes on accesstoken to know when user has logged out
         accessTokenTracker = new AccessTokenTracker() {
             @Override

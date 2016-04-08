@@ -2,6 +2,8 @@ package com.kristomb.geosnap.Services;
 
 import android.app.DownloadManager;
 import android.app.IntentService;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,10 +16,13 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.NotificationCompat;
 
+import com.kristomb.geosnap.Activities.Inbox;
 import com.kristomb.geosnap.Controllers.FileDataProvider;
 import com.kristomb.geosnap.Models.ImgData;
 import com.kristomb.geosnap.Activities.UserSettings;
+import com.kristomb.geosnap.R;
 
 import java.util.ArrayList;
 
@@ -227,7 +232,10 @@ public class GeoService extends IntentService {
         }
 
         ArrayList<ImgData> imgList = ImgProcessor.GetImgObjects(result,fileDataProvider.getCollectedImgs());
+        //Creating notification with number of new images
         fileDataProvider.addToImageList(imgList);
+        if(imgList.size()>0)
+        Notify();
         sendImgDataToActivity();
     }
 
@@ -266,5 +274,23 @@ public class GeoService extends IntentService {
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
         }
+    }
+
+    private void Notify(){
+        NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_camera_alt_24dp)
+                .setContentTitle(fileDataProvider.getNumberOfUnviewedImages() + " new images found!")
+                .setContentText("Click to open in geosnap");
+
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, Inbox.class), PendingIntent.FLAG_UPDATE_CURRENT);
+
+        notificationBuilder.setContentIntent(contentIntent);
+
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(1772,notificationBuilder.build());
+    }
+    private void cancelNotifications(){
+
     }
 }
