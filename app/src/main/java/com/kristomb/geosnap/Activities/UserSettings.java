@@ -43,6 +43,7 @@ public class UserSettings extends AppCompatActivity {
     Switch discoveryModeSwitch;
     SeekBar rangeSeekBar;
     CheckBox debugDiscoveryCheckbox;
+    CheckBox getOwnImagesCheckbox;
     Button saveSettingsButton;
     AccessTokenTracker accessTokenTracker;
     TextView reputationTextView;
@@ -51,7 +52,6 @@ public class UserSettings extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        refreshUserInfo();
         loadSettings();
         setVisibility();
     }
@@ -66,6 +66,7 @@ public class UserSettings extends AppCompatActivity {
         discoveryModeSwitch = (Switch)findViewById(R.id.discoveryModeSwitch);
         rangeSeekBar = (SeekBar)findViewById(R.id.rangeSeekBar);
         debugDiscoveryCheckbox = (CheckBox)findViewById(R.id.debugDiscoveryCheckbox);
+        getOwnImagesCheckbox = (CheckBox)findViewById(R.id.getOwnImagesCheck);
         saveSettingsButton = (Button)findViewById(R.id.saveSettingsButton);
         reputationTextView = (TextView)findViewById(R.id.reputationTextView);
 
@@ -151,7 +152,6 @@ public class UserSettings extends AppCompatActivity {
             this.finishAffinity();
         }
         else{
-            //Let's hope login screen was called from inbox activity
             this.finish();
         }
     }
@@ -160,7 +160,14 @@ public class UserSettings extends AppCompatActivity {
         ApiCommunicator communicator = new ApiCommunicator(this);
         username = communicator.getUsername();
         if(username != null){
+            //Cleaning response from api
             username = username.replace("\"", "");
+            username = username.replace("\n", "");
+            //Saving username to device to avoid api calls.
+            SharedPreferences settings = getSharedPreferences("UserSettings", 0);
+            SharedPreferences.Editor settingsEditor = settings.edit();
+            settingsEditor.putString("Username", username);
+            settingsEditor.commit();
         }
         reputation = communicator.getRating();
         if(reputation != null){
@@ -185,6 +192,8 @@ public class UserSettings extends AppCompatActivity {
 
     private void setVisibility(){
 
+        System.out.println("USERNAME IS:" + username);
+
         //If not logged in
         if(AccessToken.getCurrentAccessToken() == null ||AccessToken.getCurrentAccessToken().isExpired()){
             Button SaveButton = (Button)findViewById(R.id.LoginPageSaveUsernameButton);
@@ -196,7 +205,7 @@ public class UserSettings extends AppCompatActivity {
         //if logged in
         else{
             //If user is not registered in database
-            if(username == "Enter username"){
+            if(username == "Enter username" || username == ""){
                 Button SaveButton = (Button)findViewById(R.id.LoginPageSaveUsernameButton);
                 SaveButton.setVisibility(View.VISIBLE);
                 EditText UsernameEditText = (EditText)findViewById(R.id.LoginPageUsernameEditText);
@@ -267,12 +276,14 @@ public class UserSettings extends AppCompatActivity {
 
         //Send broadcast to let service know that discovery mode may have changed
         Intent i = new Intent("SetDiscoveryMode");
-        i.putExtra("setting",discoveryModeSwitch.isChecked());
+        i.putExtra("setting", discoveryModeSwitch.isChecked());
         LocalBroadcastManager.getInstance(this).sendBroadcast(i);
 
         settingsEditor.putInt("Range", rangeSeekBar.getProgress());
         settingsEditor.putBoolean("debugMode", debugDiscoveryCheckbox.isChecked());
+        settingsEditor.putBoolean("getOwn", getOwnImagesCheckbox.isChecked());
         settingsEditor.commit();
+
     }
 
     private void loadSettings(){
@@ -281,8 +292,14 @@ public class UserSettings extends AppCompatActivity {
         discoveryModeSwitch.setChecked(discoveryMode);
         int range = settings.getInt("Range", 50);
         rangeSeekBar.setProgress(range);
-        boolean debugMode = settings.getBoolean("debugMode",false);
+        boolean debugMode = settings.getBoolean("debugMode", false);
         debugDiscoveryCheckbox.setChecked(debugMode);
+        boolean getOwn = settings.getBoolean("getOwn", false);
+        getOwnImagesCheckbox.setChecked(getOwn);
+        username = settings.getString("Username","");
+        if(username == ""){
+            refreshUserInfo();
+        }
     }
 
     private enum snackbarMessage{

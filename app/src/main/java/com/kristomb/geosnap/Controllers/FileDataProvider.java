@@ -1,10 +1,12 @@
 package com.kristomb.geosnap.Controllers;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 
 import com.kristomb.geosnap.Models.ImgData;
+import com.kristomb.geosnap.Services.ApiCommunicator;
 import com.kristomb.geosnap.Services.GeoService;
 
 import java.io.File;
@@ -126,6 +128,7 @@ public class FileDataProvider {
             System.out.println("IMGDATA LIST SIZE: " + imgList.size());
             is.close();
             fis.close();
+            imgList = removeOwnImages(imgList);
             //Removing old files from list and updating file
             imgList = removeOldFileData(imgList);
             initiateLoading(imgList);
@@ -136,8 +139,29 @@ public class FileDataProvider {
         }
         //Something went wrong reading the file
         //Restore file and return empty list
-        System.out.println("CLUSTERFUCK IN FILE. RESETTING THE ENTIRE THING");
+        System.out.println("RESETTING FILE");
         return resetImageDataFile();
+    }
+
+
+    //Filters out users own images
+    private ArrayList<ImgData> removeOwnImages(ArrayList<ImgData> inputList){
+        SharedPreferences settings = geoService.getSharedPreferences("UserSettings", 0);
+        boolean getOwn = settings.getBoolean("getOwn", false);
+        //If user wants to recieve own images, stop here
+        if(getOwn){
+            return inputList;
+        }
+        String username = settings.getString("Username", "");
+        ArrayList<ImgData> outputList = new ArrayList<ImgData>();
+        for(ImgData d: inputList){
+            System.out.println("PICTURE FROM " + d.getUser() + " I AM " + username);
+            if(!d.getUser().contentEquals(username)){
+                outputList.add(d);
+                System.out.println("ADDING");
+            }
+        }
+        return outputList;
     }
 
     //Adding imgData objects to file

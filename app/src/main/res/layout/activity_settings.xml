@@ -65,11 +65,12 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Get all images (Debugging mode)"
+        android:text="Ignore range"
         android:id="@+id/debugDiscoveryCheckbox"
         android:checked="false"
         android:layout_above="@+id/saveSettingsButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_toLeftOf="@+id/saveSettingsButton"
+        android:layout_toStartOf="@+id/saveSettingsButton" />
 
     <Switch
         android:layout_width="wrap_content"
@@ -113,5 +114,15 @@
         android:id="@+id/reputationTextView"
         android:layout_below="@+id/reputationLabel"
         android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get own images"
+        android:id="@+id/getOwnImagesCheck"
+        android:checked="false"
+        android:layout_below="@+id/rangeSeekBar"
+        android:layout_alignLeft="@+id/saveSettingsButton"
+        android:layout_alignStart="@+id/saveSettingsButton" />
 
 </RelativeLayout>

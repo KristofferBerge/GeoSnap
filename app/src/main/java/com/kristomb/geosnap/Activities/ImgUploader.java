@@ -58,6 +58,7 @@ public class ImgUploader extends AppCompatActivity {
         imgView.setImageBitmap(bm);
 
         uploadButton = (Button) findViewById(R.id.uploaderShareButton);
+        uploadButton.setEnabled(true);
         uploadButton.setOnClickListener(new View.OnClickListener() {
                                  @Override
                                  public void onClick(View v) {
