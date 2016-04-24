@@ -18,7 +18,7 @@ import java.io.OutputStream;
 public class ImageProcessor {
 
 
-    //99.9% copypaste. This class handles problems with some phones rotating images. It compresses to avoid OutOfMemoryException, reads metadata about rotation, rotates if needed and saves.
+    //99% copypaste. This class handles problems with some phones rotating images. It compresses to avoid OutOfMemoryException, reads metadata about rotation, rotates if needed and saves.
     //http://stackoverflow.com/questions/12777386/android-captured-image-to-be-in-portrait
 
 

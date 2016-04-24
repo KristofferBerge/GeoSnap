@@ -1,17 +1,50 @@
 <resources>
     <string name="app_name">GeoSnap</string>
     <string name="facebook_app_id">459343100932396</string>
-    <string name="second">second</string>
-    <string name="seconds">seconds</string>
-    <string name="hours">hours</string>
-    <string name="hour">hour</string>
-    <string name="minutes">minutes</string>
-    <string name="minute">minute</string>
-    <string name="days">days</string>
-    <string name="day">day</string>
+
+    <plurals name="seconds">
+        <item quantity="one">second</item>
+        <item quantity="other">seconds</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">minute</item>
+        <item quantity="other">minutes</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">hour</item>
+        <item quantity="other">hours</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
     <string name="ago">ago</string>
 
+    <plurals name="numberOfNewImagesFound">
+        <item quantity="one">%d new image found!</item>
+        <item quantity="other">%d new images found!</item>
+    </plurals>
+    <string name="clickToOpenInGeoSnap">Click to open in geosnap</string>
+
+    <string name="share">share</string>
+    <string name="uploadFailed">Upload Failed…</string>
+    <string name="tryAgain">Try again</string>
+    <string name="closeApplication">Close application</string>
+    <string name="save">Save</string>
+    <string name="saveChanges">Save changes</string>
+    <string name="usernameColon">Username:</string>
+    <string name="enterUsername">Enter username</string>
+    <string name="errorUsernameTooShort">Username too short</string>
+    <string name="errorUsernameTooLong">Username too long</string>
+    <string name="reputationColon">Reputation:</string>
+    <string name="ignoreRange">Ignore range</string>
+    <string name="discoveryMode">Discovery mode</string>
+    <string name="getOwnImages">Get own images</string>
+
+    <string name="errorNoGpsData">No gps-data available, please check your settings…</string>
+    <string name="errorUpdatingFailed">Updating failed, please try again…</string>
+    <string name="errorLoadingSettingsCheckConnection">Error loading settings, please check your connection…</string>
+    <string name="noImagesGoFindSome">You have no images. Go out and find some!</string>
+
     <string name="title_activity_img_viewer">ImgViewer</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

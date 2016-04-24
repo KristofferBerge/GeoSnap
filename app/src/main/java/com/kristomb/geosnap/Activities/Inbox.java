@@ -28,23 +28,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
 import com.kristomb.geosnap.Adapters.ImgDataAdapter;
+import com.kristomb.geosnap.Controllers.ImageProcessor;
 import com.kristomb.geosnap.Models.ImgData;
 import com.kristomb.geosnap.Models.ImgDataComparator;
 import com.kristomb.geosnap.R;
 import com.kristomb.geosnap.Services.GeoService;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.common.GoogleApiAvailability;
-
-import org.w3c.dom.Text;
-
 import java.io.File;
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -123,7 +118,7 @@ public class Inbox extends AppCompatActivity {
 
         //Creating empty adapter to display if inbox is empty
         emptyAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
-        emptyAdapter.add("You have no images. Go out and find some!");
+        emptyAdapter.add(getString(R.string.noImagesGoFindSome));
 
 
         lv.setAdapter(imgDataAdapter);
@@ -139,10 +134,6 @@ public class Inbox extends AppCompatActivity {
                     //Opening new fullscreen activity to display image
                     displayImgFullscreen(data.getImgId(), data.getUser());
 
-
-                    //TODO: Remove this. Method moved to imgViewer activity
-                    //Notify service that image is displayed
-                    //notifyImageDisplayed(data.getImgId());
                 }
             }
         });
@@ -264,14 +255,14 @@ public class Inbox extends AppCompatActivity {
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
 
         if(message == snackbarMessage.NO_LOCATION_AVAILABLE){
-            sb.setText("No gps-data available, please check your settings...");
+            sb.setText(getString(R.string.errorNoGpsData));
             textView.setTextColor(Color.RED);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             }
         }
         else if(message == snackbarMessage.GENERAL_ERROR_LOADING_IMAGEDATA){
-            sb.setText("Updating failed, please try again...");
+            sb.setText(getString(R.string.errorUpdatingFailed));
             textView.setTextColor(Color.RED);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -281,6 +272,7 @@ public class Inbox extends AppCompatActivity {
     }
 
 
+    //Copypaste from stackoverflow to print debug-key needed for the facebook api
     //TODO: only for debugging
     public static String printKeyHash(Activity context) {
         PackageInfo packageInfo;
@@ -366,6 +358,12 @@ public class Inbox extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 0 && resultCode == RESULT_OK){
+            //Image has successfully been taken. Resample image and start uploader activity
+            try {
+                ImageProcessor.resampleImageAndSaveToNewLocation(this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             displayImgUploader();
         }
     }

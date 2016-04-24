@@ -27,7 +27,7 @@ public class ImgProcessor {
                         continue outer;
                     }
                 }
-                //TODO Error handling for parsing timestamp
+
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 String timestampString = arr.getJSONObject(i).getString("Timestamp");
                 //MYSQL-database adding T in timestamp. Java does not like...

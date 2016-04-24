@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">GeoSnap</string>
+    <string name="facebook_app_id">459343100932396</string>
+
+    <plurals name="seconds">
+        <item quantity="one">sekund</item>
+        <item quantity="other">sekunder</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">minutt</item>
+        <item quantity="other">minutter</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">time</item>
+        <item quantity="other">timer</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="one">dag</item>
+        <item quantity="other">dager</item>
+    </plurals>
+    <string name="ago">siden</string>
+
+    <plurals name="numberOfNewImagesFound">
+        <item quantity="one">%d nytt bilde funnet!</item>
+        <item quantity="other">%d nye bilder funnet!</item>
+    </plurals>
+    <string name="clickToOpenInGeoSnap">Klikk for å åpne i geosnap</string>
+
+    <string name="share">del</string>
+    <string name="uploadFailed">Opplasting mislyktes…</string>
+    <string name="tryAgain">Prøv igjen</string>
+    <string name="closeApplication">Lukk applikasjon</string>
+    <string name="save">Lagre</string>
+    <string name="saveChanges">Lagre endringer</string>
+    <string name="usernameColon">Brukernavn:</string>
+    <string name="enterUsername">Skriv inn brukernavn</string>
+    <string name="errorUsernameTooShort">Brukernavn for kort</string>
+    <string name="errorUsernameTooLong">Brukernavn for langt</string>
+    <string name="reputationColon">Rykte:</string>
+    <string name="ignoreRange">Ignorèr avstand</string>
+    <string name="discoveryMode">Oppdagelsesmodus</string>
+    <string name="getOwnImages">Hent egne bilder</string>
+
+    <string name="errorNoGpsData">Ingen gps-data tilgjengelig, vennligst sjekk innstillingene dine…</string>
+    <string name="errorUpdatingFailed">Oppdatering mislyktes, vennligst prøv igjen…</string>
+    <string name="errorLoadingSettingsCheckConnection">Kunne ikke laste innstillinger, vennligst sjekk tilkoblingen din…</string>
+    <string name="noImagesGoFindSome">Du har ingen bilder. Gå ut og finn noen!</string>
+
+    <string name="title_activity_img_viewer">ImgViewer</string>
+</resources>

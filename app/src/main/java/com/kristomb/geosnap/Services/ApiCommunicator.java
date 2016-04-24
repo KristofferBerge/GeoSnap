@@ -36,18 +36,6 @@ public class ApiCommunicator {
         C = c;
     }
 
-    //TODO: Replace with method using gps-position
-    public String doWork(){
-        try {
-            return new GetTask().execute("").get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public String getAllImages(){
         try {
             return new GetTask().execute("").get();
@@ -139,7 +127,6 @@ public class ApiCommunicator {
             new PostTask().execute(encodedImage,Double.toString(lat),Double.toString(lng));
         }
         catch(OutOfMemoryError e){
-            //Yes this has happened on my shitty S4 active
             e.printStackTrace();
             System.out.println("OUT OF MEMORY!!!!");
         }
@@ -153,7 +140,6 @@ public class ApiCommunicator {
                 double lat = Double.parseDouble(params[1]);
                 double lng = Double.parseDouble(params[2]);
 
-                //TODO: check if accesstoken is valid
                 String accessToken = AccessToken.getCurrentAccessToken().getToken();
 
                 URL url = new URL("http://geosnap.azurewebsites.net/api/Values?lat="+ lat + "&lng=" + lng);
@@ -273,7 +259,7 @@ public class ApiCommunicator {
                     }
                     //TODO: rewrite this entire class
                     else if(con.getResponseCode() == HttpURLConnection.HTTP_NO_CONTENT){
-                        return "Enter username";
+                        return "";
                     }
                 }
                 catch(Exception e){
@@ -304,7 +290,7 @@ public class ApiCommunicator {
             try{
                 String username = params[0];
                 URL url = new URL(usernameApiUrl + "?username=" + username);
-                //TODO: check if accesstoken is valid
+
                 String accessToken = AccessToken.getCurrentAccessToken().getToken();
 
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -329,7 +315,7 @@ public class ApiCommunicator {
                 String voteString = params[1];
                 int vote = Integer.parseInt(voteString);
                 URL url = new URL(voteApiUrl + "?username=" + username + "&vote=" + vote);
-                //TODO: check if accesstoken is valid
+
                 String accessToken = AccessToken.getCurrentAccessToken().getToken();
 
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();

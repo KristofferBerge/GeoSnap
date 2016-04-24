@@ -1,6 +1,7 @@
 package com.kristomb.geosnap.Adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ public class ImgDataAdapter extends ArrayAdapter<ImgData> {
 
     ArrayList<ImgData> Resource;
     Context C = super.getContext();
+    Resources res = C.getResources();
 
     public ImgDataAdapter(Context context, ArrayList<ImgData> resource) {
         super(context, -1, resource);
@@ -58,43 +60,28 @@ public class ImgDataAdapter extends ArrayAdapter<ImgData> {
         long hours = TimeUnit.MILLISECONDS.toHours(diff);
         if(hours > 0 && hours < 24){
             timeText += hours + " ";
-            if(hours == 1){
-                timeText += C.getString(R.string.hour);
-            }
-            else{
-                timeText += C.getString(R.string.hours);
-            }
+            timeText += res.getQuantityString(R.plurals.hours, (int) hours);
             timeText += " " + C.getString(R.string.ago);
             return timeText;
         }
         long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
         if(minutes > 0 && minutes < 60){
             timeText += minutes + " ";
-            if(minutes == 1){
-                timeText += C.getString(R.string.minute);
-            }
-            else{
-                timeText += C.getString(R.string.minutes);
-            }
+            timeText += res.getQuantityString(R.plurals.minutes, (int) minutes);
             timeText += " " + C.getString(R.string.ago);
             return timeText;
         }
         long seconds = TimeUnit.MILLISECONDS.toSeconds(diff);
         if(seconds > 0 && seconds < 60){
             timeText += seconds + " ";
-            if(seconds == 1){
-                timeText += C.getString(R.string.second);
-            }
-            else{
-                timeText += C.getString(R.string.seconds);
-            }
+            timeText += res.getQuantityString(R.plurals.seconds, (int) seconds);
             timeText += " " + C.getString(R.string.ago);
             return timeText;
         }
         else{
             return TimeUnit.MILLISECONDS.toDays(diff)
-                    + " " + super.getContext().getString(R.string.days)
-                    + " " + super.getContext().getString(R.string.ago);
+                    + " " + res.getQuantityString(R.plurals.days, 1)
+                    + " " + C.getString(R.string.ago);
         }
     }
 }

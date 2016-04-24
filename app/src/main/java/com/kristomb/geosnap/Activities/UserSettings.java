@@ -52,6 +52,7 @@ public class UserSettings extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
+        refreshUserInfo();
         loadSettings();
         setVisibility();
     }
@@ -205,12 +206,12 @@ public class UserSettings extends AppCompatActivity {
         //if logged in
         else{
             //If user is not registered in database
-            if(username == "Enter username" || username == ""){
+            if(username == ""){
                 Button SaveButton = (Button)findViewById(R.id.LoginPageSaveUsernameButton);
                 SaveButton.setVisibility(View.VISIBLE);
                 EditText UsernameEditText = (EditText)findViewById(R.id.LoginPageUsernameEditText);
                 UsernameEditText.setEnabled(true);
-                UsernameEditText.setHint("Enter username");
+                UsernameEditText.setHint(getString(R.string.enterUsername));
                 SaveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -316,21 +317,21 @@ public class UserSettings extends AppCompatActivity {
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
 
         if(message == snackbarMessage.ERROR_LOADING_SETTINGS){
-            sb.setText("Error loading settings, please check your connection...");
+            sb.setText(getString(R.string.errorLoadingSettingsCheckConnection));
             textView.setTextColor(Color.RED);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             }
         }
         else if(message == snackbarMessage.USERNAME_TOO_LONG){
-            sb.setText("Username too long");
+            sb.setText(getString(R.string.errorUsernameTooLong));
             textView.setTextColor(Color.RED);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             }
         }
         else if(message == snackbarMessage.USERNAME_TOO_SHORT){
-            sb.setText("Username too short");
+            sb.setText(getString(R.string.errorUsernameTooShort));
             textView.setTextColor(Color.RED);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);

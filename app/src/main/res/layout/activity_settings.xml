@@ -31,7 +31,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="@string/save"
         android:id="@+id/LoginPageSaveUsernameButton"
         android:layout_below="@+id/LoginPageUsernameEditText"
         android:layout_centerHorizontal="true" />
@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Username:"
+        android:text="@string/usernameColon"
         android:id="@+id/LoginPageUsernameLabel"
         android:layout_marginTop="46dp"
         android:layout_below="@+id/login_button"
@@ -49,33 +49,23 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save Changes"
+        android:text="@string/saveChanges"
         android:id="@+id/saveSettingsButton"
-        android:layout_above="@+id/Bug_info"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Known limitations: Due to the android download manager's lack of permissions, external storage (SD-card) is required to use this app. "
-        android:id="@+id/Bug_info"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/getOwnImagesCheck"
         android:layout_centerHorizontal="true" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ignore range"
+        android:text="@string/ignoreRange"
         android:id="@+id/debugDiscoveryCheckbox"
         android:checked="false"
-        android:layout_above="@+id/saveSettingsButton"
-        android:layout_toLeftOf="@+id/saveSettingsButton"
-        android:layout_toStartOf="@+id/saveSettingsButton" />
+        android:layout_below="@+id/rangeSeekBar" />
 
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Discovery mode"
+        android:text="@string/discoveryMode"
         android:id="@+id/discoveryModeSwitch"
         android:checked="false"
         android:layout_centerVertical="true"
@@ -85,7 +75,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/rangeSeekBar"
-        android:layout_above="@+id/debugDiscoveryCheckbox"
+        android:layout_below="@+id/rangeSeekBarLabel"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -95,14 +85,14 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text=""
         android:id="@+id/rangeSeekBarLabel"
-        android:layout_above="@+id/rangeSeekBar"
+        android:layout_below="@+id/discoveryModeSwitch"
         android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Reputation:"
+        android:text="@string/reputationColon"
         android:id="@+id/reputationLabel"
         android:layout_below="@+id/login_button"
         android:layout_centerHorizontal="true" />
@@ -118,11 +108,10 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Get own images"
+        android:text="@string/getOwnImages"
         android:id="@+id/getOwnImagesCheck"
         android:checked="false"
         android:layout_below="@+id/rangeSeekBar"
-        android:layout_alignLeft="@+id/saveSettingsButton"
-        android:layout_alignStart="@+id/saveSettingsButton" />
+        android:layout_toRightOf="@id/debugDiscoveryCheckbox"/>
 
 </RelativeLayout>

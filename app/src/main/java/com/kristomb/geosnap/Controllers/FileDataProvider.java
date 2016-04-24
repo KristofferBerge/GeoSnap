@@ -196,27 +196,6 @@ public class FileDataProvider {
         return i;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-    //TODO: Implement method to "Clean" image-file. Delete pictures that have expired
-
-
-
-
-
-
-
-
-
     //Returns string of imgIds
     public Integer[] getCollectedImgs(){
         ArrayList<ImgData> imgList = getImageList();
@@ -245,8 +224,6 @@ public class FileDataProvider {
     }
 
 
-
-    //TODO: needs better name
     public Bitmap getCachedImage(){
         File f = new File(String.valueOf(geoService.getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/cachedImage.jpg")));
         //Parsing image-file to bitmap

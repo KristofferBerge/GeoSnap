@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
@@ -21,12 +22,10 @@ import android.support.v7.app.NotificationCompat;
 import com.kristomb.geosnap.Activities.Inbox;
 import com.kristomb.geosnap.Controllers.FileDataProvider;
 import com.kristomb.geosnap.Models.ImgData;
-import com.kristomb.geosnap.Activities.UserSettings;
 import com.kristomb.geosnap.R;
 
 import java.util.ArrayList;
 
-//TODO STILL NOT STARTING ON NEW TRHEAD!!!!!!!!!!
 public class GeoService extends IntentService {
 
     LocationServiceCallback locationServiceCallback;
@@ -99,8 +98,6 @@ public class GeoService extends IntentService {
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(forceUpdateRequestReciever, new IntentFilter("ForceUpdateImage"));
 
-
-
         //Broadcastreciever for completed download
         downloadCompleteReciever = new BroadcastReceiver() {
             @Override
@@ -126,7 +123,8 @@ public class GeoService extends IntentService {
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(imgDisplayedReciever, new IntentFilter("ImgDisplayed"));
-        //Broadcastreciever for image displayed
+
+        //Broadcastreciever for uploading image
         uploadImageReciever = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -135,6 +133,8 @@ public class GeoService extends IntentService {
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(uploadImageReciever, new IntentFilter("UploadImage"));
+
+        //Broadcastreciever to toggle discovery mode
         setDiscoveryModeReciever = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -148,6 +148,8 @@ public class GeoService extends IntentService {
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(setDiscoveryModeReciever,new IntentFilter("SetDiscoveryMode"));
+
+        //Broadcastreciever for sending vote to api
         voteReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -164,8 +166,6 @@ public class GeoService extends IntentService {
     public int onStartCommand(Intent intent, int flags, int startId){
         //Send image data back to activity when started
         sendImgDataToActivity();
-
-        //TODO: WHY AM I DOING THIS?
         return START_STICKY;
     }
 
@@ -185,7 +185,7 @@ public class GeoService extends IntentService {
         LocalBroadcastManager.getInstance(this).sendBroadcast(i);
     }
 
-
+    //Using the download manager to download images in background
     public void loadImage(int id){
         //Check if image already is downloading
         DownloadManager downloader = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
@@ -212,14 +212,8 @@ public class GeoService extends IntentService {
         }
     }
 
-
-
-    ////////////////////////////////////////////////////////////////////
-    //OLD METHODS BELOW
-    ////////////////////////////////////////////////////////////////////
-
-
     public void RequestApiCall(Location location){
+        //Reading current settings
         SharedPreferences settings =getSharedPreferences("UserSettings", 0);
         boolean debugMode = settings.getBoolean("debugMode", false);
         int range = settings.getInt("Range",50);
@@ -239,13 +233,15 @@ public class GeoService extends IntentService {
         sendImgDataToActivity();
     }
 
+    //Does a api call on a new thread to avoid freezing UI
     public class RequestApiThread implements Runnable{
         Location location;
         public RequestApiThread(Location location){
             this.location = location;
         }
         public void run(){
-            SharedPreferences settings =getSharedPreferences("UserSettings", 0);
+            //Reading current settings
+            SharedPreferences settings = getSharedPreferences("UserSettings", 0);
             boolean debugMode = settings.getBoolean("debugMode", false);
             int range = settings.getInt("Range",50);
             String result = null;
@@ -269,18 +265,19 @@ public class GeoService extends IntentService {
             apiCommunicator.UploadImage(fileDataProvider.getCachedImage(), loc.getLatitude(), loc.getLongitude());
         }
         else{
-            //TODO: Add message to user to explain why settings opens
             Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
         }
     }
 
+    //Creates notification
     private void Notify(){
+        Resources res = getResources();
         NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_camera_alt_24dp)
-                .setContentTitle(fileDataProvider.getNumberOfUnviewedImages() + " new images found!")
-                .setContentText("Click to open in geosnap");
+                .setContentTitle(res.getQuantityString(R.plurals.numberOfNewImagesFound, fileDataProvider.getNumberOfUnviewedImages()))
+                .setContentText(getString(R.string.clickToOpenInGeoSnap));
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, Inbox.class), PendingIntent.FLAG_UPDATE_CURRENT);
@@ -289,8 +286,5 @@ public class GeoService extends IntentService {
 
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(1772,notificationBuilder.build());
-    }
-    private void cancelNotifications(){
-
     }
 }

@@ -1,31 +1,21 @@
 package com.kristomb.geosnap.Activities;
 
 import android.content.BroadcastReceiver;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
-import android.net.Uri;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.kristomb.geosnap.Controllers.ImageProcessor;
 import com.kristomb.geosnap.R;
-
-import java.io.File;
 
 public class ImgUploader extends AppCompatActivity {
 
@@ -47,13 +37,7 @@ public class ImgUploader extends AppCompatActivity {
         ImageView imgView = (ImageView)findViewById(R.id.uploaderImageView);
         String dir = String.valueOf(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES));
         String filepath = dir + "/cachedImage.jpg";
-        File file = new File(filepath);
-        Uri fileUri = Uri.fromFile(file);
-        try {
-            ImageProcessor.resampleImageAndSaveToNewLocation(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         Bitmap bm = BitmapFactory.decodeFile(filepath);
         imgView.setImageBitmap(bm);
 
@@ -80,10 +64,9 @@ public class ImgUploader extends AppCompatActivity {
                     uploadProgressBar.setVisibility(View.GONE);
                     uploadButton.setEnabled(true);
                     TextView t = (TextView)findViewById(R.id.uploadErrorText);
-                    t.setText("Uploading failed...");
-                    uploadButton.setText("Try again");
+                    t.setText(R.string.uploadFailed);
+                    uploadButton.setText(R.string.tryAgain);
                 }
-
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(uploadStatusReciever, new IntentFilter("UploadStatus"));
@@ -95,6 +78,4 @@ public class ImgUploader extends AppCompatActivity {
         Intent i = new Intent("UploadImage");
         LocalBroadcastManager.getInstance(this).sendBroadcast(i);
     }
-
-
 }
